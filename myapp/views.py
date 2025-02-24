@@ -3,9 +3,10 @@ from django.http import HttpResponse # type: ignore
 from django.contrib.auth.forms import UserCreationForm # type: ignore
 from django.contrib.auth import login, authenticate # type: ignore
 from django.contrib.auth.models import User # type: ignore
-from .models import Member,User
+from .models import Member, User
 from .serializers import RegisterSerializer
 from rest_framework.renderers import JSONRenderer # type: ignore
+
 # Create your views here.
 def home(request):
     return render(request, "home.html")
@@ -14,11 +15,11 @@ def Member(response):
     if response.method == "POST":
         form = UserCreationForm(response.POST)
         if form.is_valid():
-            user=form.save()
+            user = form.save()
         return redirect("/home")
     else:
-      form = UserCreationForm()
-    return render(response, "register.html" ,{"form":form })
+        form = UserCreationForm()
+    return render(response, "register.html", {"form": form})
 
 def login(request):
     return render(request, "login.html")
@@ -52,4 +53,13 @@ def print_register(request):
     json_data = JSONRenderer().render(serializer.data)
     print(json_data)
     return HttpResponse(json_data, content_type="application/json")
-    
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login_html")
+    else:
+        form = UserCreationForm()
+    return render(request, "register.html", {"form": form})
