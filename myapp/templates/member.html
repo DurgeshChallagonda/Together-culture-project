@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Login</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
         }
         .container {
-            background-color: #fff;
-            padding: 20px;
+            background-color: #d3d3d3;
+            padding: 30px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 350px;
             text-align: center;
+            margin: 150px auto;
         }
         h2 {
             margin-bottom: 20px;
@@ -34,7 +33,7 @@
             margin-bottom: 5px;
         }
         .form-group input {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -52,19 +51,66 @@
         button:hover {
             background-color: #0056b3;
         }
+        .forgot-password {
+            display: block;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size: 12px;
+            color: black;
+        }
+        .forgot-password a {
+            color: black;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <centre><h2>Member Login</h2>
-    <form action="/home" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Login</button>
-    </form>
-</centre>
+    <div class="main-container" style="background: #f1e3e3; height: 100vh; overflow: hidden; width: 100%;">
+      
+      <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+      
+      <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About</a> <!-- Add about link when you finish the HTML about page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'login_html' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
+        </div>
+      </div>
+      
+      <!-- Logo image -->
+      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="image-10.png" />
+
+      <div class="container">
+        <h1>Member Login</h1>
+        <form action="{% url 'member_login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+            <button type="submit">Login</button>
+            {% if error %}
+                <p style="color: red;">Wrong username or password</p>
+            {% endif %}
+        </form>
+      </div>
+    </div>
 </body>
 </html>

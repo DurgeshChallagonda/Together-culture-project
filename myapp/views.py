@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect # type: ignore
 from django.http import HttpResponse # type: ignore
 from django.contrib.auth.forms import UserCreationForm # type: ignore
-from django.contrib.auth import login, authenticate # type: ignore
+from django.contrib.auth import login as auth_login, authenticate # type: ignore
 from django.contrib.auth.models import User # type: ignore
-from .models import Member, User
+from .models import Member
 from .serializers import RegisterSerializer
 from rest_framework.renderers import JSONRenderer # type: ignore
 
@@ -33,7 +33,12 @@ def admin_login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-    return render(request, "adminlogin.html")
+        if user is not None:
+            auth_login(request, user)
+            return redirect("/admin/")  # Redirect to Django admin dashboard
+        else:
+            return render(request, "adminlogin.html", {"error": "Invalid credentials"})
+    return render(request, 'adminlogin.html')
 
 def member_login(request):
     if request.method == "POST":
@@ -41,10 +46,10 @@ def member_login(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth_login(request, user)
             return redirect("/member/dashboard")
         else:
-            return render(request, "login.html", {"error": "Invalid credentials"})
+            return render(request, "member.html", {"error": "Wrong username or password"})
     return render(request, "member.html")
 
 def print_register(request):
@@ -63,3 +68,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, "register.html", {"form": form})
+
+def member_dashboard(request):
+    return render(request, 'member_dashboard.html')

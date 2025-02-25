@@ -1,5 +1,5 @@
 from django.contrib import admin  # type: ignore
-from .models import User,Member
+from .models import User, Member
 # Register your models here.
 
 admin.site.register(User)
