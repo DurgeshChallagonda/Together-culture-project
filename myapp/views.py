@@ -35,10 +35,16 @@ def admin_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect("/admin/")  # Redirect to Django admin dashboard
+            return redirect("custom_admin_dashboard")  # Redirect to custom admin dashboard
         else:
             return render(request, "adminlogin.html", {"error": "Invalid credentials"})
     return render(request, 'adminlogin.html')
+
+def custom_admin_dashboard(request):
+    if not request.user.is_staff:
+        return redirect('admin_login')
+    # Add custom logic here
+    return render(request, 'admin_dashboard.html')
 
 def member_login(request):
     if request.method == "POST":

@@ -14,4 +14,5 @@ urlpatterns = [
     path("user/", views.user, name="user"),
     path("print_register/", views.print_register, name="print_register"),
     path('member/dashboard', views.member_dashboard, name='member_dashboard'),
+    path('custom-admin-dashboard/', views.custom_admin_dashboard, name='custom_admin_dashboard'),
 ]
