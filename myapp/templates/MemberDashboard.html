@@ -6,31 +6,83 @@
     <title>Member Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f1e3e3; /* Light background */
+            color: #212121; /* Matte black */
+        }
+        .navbar, .card, .btn {
+            background-color: #FFFFFF; /* White */
+            color: #212121; /* Matte black */
+        }
+        .navbar-brand, .nav-link, .card-header, .card-title, .btn {
+            color: #212121 !important; /* Matte black */
+        }
+        .card-body {
+            background-color: #FFFFFF; /* White */
+        }
+        .btn-primary {
+            background-color: #007BFF; /* Blue */
+            border-color: #007BFF;
+            color: #FFFFFF; /* White */
+        }
+        .btn-secondary {
+            background-color: #6C757D; /* Secondary Blue */
+            border-color: #6C757D;
+            color: #FFFFFF; /* White */
+        }
+        .btn-success {
+            background-color: #28A745; /* Success Green */
+            border-color: #28A745;
+            color: #FFFFFF; /* White */
+        }
+        .header {
+            background: #6b4848; /* Dark brown */
+            width: 100%;
+            height: 106px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 106px;
+            padding-right: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link {
+            margin-left: 20px;
+        }
+        .nav-link a {
+            color: #ffffff;
+            font-family: 'Inter-Bold', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Together Culture</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-            </ul>
+    <div class="header"></div>
+    <div class="nav-links">
+        <div class="nav-link">
+            <a href="#" class="link">Resources</a>
         </div>
-    </nav>
-    <div class="container">
+        <div class="nav-link">
+            <a href="#" class="link">Membership</a>
+        </div>
+        <div class="nav-link">
+            <a href="#" class="link">About</a>
+        </div>
+        <div class="nav-link">
+            <a href="login.html" class="link">Login</a>
+        </div>
+    </div>
+    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
+    
+    <div class="container mt-4">
         <h1>Welcome to Member Dashboard</h1>
         <p>This is the place where you can explore your thoughts at our place Together Culture</p>
         
@@ -38,7 +90,9 @@
             <button type="button" class="btn btn-primary mx-3">
                 <i class="fas fa-user"></i> Membership status
             </button>
-            <button type="button" class="btn btn-secondary mx-3">Messages</button>
+            <button type="button" class="btn btn-secondary mx-3">
+                <i class="fas fa-envelope"></i> Messages
+            </button>
             <button type="button" class="btn btn-success mx-3">Benefits</button>
         </div>
     </div>
@@ -79,7 +133,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 d-flex align-items-center">
-                            <img src=".myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842" alt="Image 2" class="img-fluid mr-3" style="width: 100px; height: 100px;">
+                            <img src="myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842.jpg" alt="Image 2" class="img-fluid mr-3" style="width: 100px; height: 100px;">
                             <div>
                                 <h5>Ballet dance Classes</h5>
                                 <button type="button" class="btn btn-primary">Join</button>
