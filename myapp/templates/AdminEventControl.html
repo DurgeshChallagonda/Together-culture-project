@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Event Control</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f1e3e3; /* Light background */
+            color: #212121; /* Matte black */
+        }
+        .navbar, .card, .btn {
+            background-color: #FFFFFF; /* White */
+            color: #212121; /* Matte black */
+        }
+        .navbar-brand, .nav-link, .card-header, .card-title, .btn {
+            color: #212121 !important; /* Matte black */
+        }
+        .card-body {
+            background-color: #FFFFFF; /* White */
+        }
+        .btn-primary {
+            background-color: #007BFF; /* Blue */
+            border-color: #007BFF;
+            color: #FFFFFF; /* White */
+        }
+        .btn-secondary {
+            background-color: #6C757D; /* Secondary Blue */
+            border-color: #6C757D;
+            color: #FFFFFF; /* White */
+        }
+        .btn-success {
+            background-color: #28A745; /* Success Green */
+            border-color: #28A745;
+            color: #FFFFFF; /* White */
+        }
+        .header {
+            background: #6b4848; /* Dark brown */
+            width: 100%;
+            height: 106px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 106px;
+            padding-right: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link {
+            margin-left: 20px;
+        }
+        .nav-link a {
+            color: #ffffff;
+            font-family: 'Inter-Bold', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"></div>
+    <div class="nav-links">
+        <div class="nav-link">
+            <a href="#" class="link">Resources</a>
+        </div>
+        <div class="nav-link">
+            <a href="#" class="link">Membership</a>
+        </div>
+        <div class="nav-link">
+            <a href="#" class="link">About</a>
+        </div>
+        <div class="nav-link">
+            <a href="login.html" class="link">Login</a>
+        </div>
+    </div>
+    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
+    
+    <div class="container mt-4">
+        <h1>Admin Event Control</h1>
+        <p>As an Administrator: I want to create and manage different event categories for members, So that I can organize and classify events by type (e.g., educational, social, creative) for easier navigation.</p>
+        <p>Acceptance Criteria:</p>
+        <ul>
+            <li>I can create and categorize events into different types (e.g., workshops, meetups, creative sessions).</li>
+            <li>Members can filter events by category when browsing.</li>
+            <li>I can edit or delete events and adjust their categories as needed.</li>
+        </ul>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Create Event</h2>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="eventName">Event Name</label>
+                        <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventCategory">Event Category</label>
+                        <select class="form-control" id="eventCategory">
+                            <option>Workshops</option>
+                            <option>Meetups</option>
+                            <option>Creative Sessions</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Event Description</label>
+                        <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Event</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Manage Events</h2>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sample Event 1</td>
+                            <td>Workshops</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sample Event 2</td>
+                            <td>Meetups</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sample Event 3</td>
+                            <td>Creative Sessions</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
