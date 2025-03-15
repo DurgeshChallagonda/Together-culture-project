@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Connections</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">TogetherCulture</div>
+        <div class="navbar-menu">
+            <a href="#">Events</a>
+            <a href="#">Resources</a>
+            <a href="#">Membership</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Welcome to the Community Connections Board</h1>
+        
+        <div class="image-container">
+            <img id="ai_image" src="{% static 'myapp/images/ai.jpeg' %}" alt="AI Course" style="width: 407px;">
+            <a href="link1.html" class="join-button">Join</a>
+        </div>
+        
+        <div class="image-container">
+            <img id="ai_image" src="{% static 'myapp/images/Python-Logo.jpg' %}" alt="ML" style="width: 407px;">
+            <a href="link2.html" class="join-button">Join</a>
+        </div>
+        
+        <div class="image-container">
+            <img id="ai_image" src="{% static 'myapp/images/machine-learning.jpg' %}" alt="Image 3" style="width: 407px;">
+            <a href="link3.html" class="join-button">Join</a>
+        </div>
+
+        <div class="board-description">
+            <p>As a member, you can access our Digital Connections Board. Here, you can see what others in the community need and offer, allowing for mutual support and collaboration.</p>
+        </div>
+
+        <div class="acceptance-criteria">
+            <h2>Acceptance Criteria</h2>
+            <ul>
+                <li>Must be a registered member of the community.</li>
+                <li>Must agree to the community guidelines and code of conduct.</li>
+                <li>Must actively participate by offering help or resources.</li>
+                <li>Must respect the privacy and needs of other members.</li>
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Contact us at: info@togetherculture.com</p>
+        <p>Phone: (123) 456-7890</p>
+    </footer>
+</body>
+</html>
