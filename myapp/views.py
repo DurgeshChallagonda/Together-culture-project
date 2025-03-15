@@ -11,6 +11,9 @@ from rest_framework.renderers import JSONRenderer # type: ignore
 def home(request):
     return render(request, "home.html")
 
+def course(request):
+    return render(request, "course.html")
+
 def Member(response):
     if response.method == "POST":
         form = UserCreationForm(response.POST)
