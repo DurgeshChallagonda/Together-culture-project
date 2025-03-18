@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+  </head>
+  <body>
+    <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
+      
+      <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+      
+      <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="about_us.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="login.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
+        </div>
+      </div>
+      
+      <!-- Logo image -->
+      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+      
+      <div style="width: 303px; height: 44px; left: 524px; top: 156px; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 700; word-wrap: break-word">Together Culture</div>
+    <img style="width: 48px; height: 31px; left: 461px; top: 156px; position: absolute" src="{% static 'img/member.png'%}" />
+    <div style="width: 249px; height: 52px; left: 904px; top: 723px; position: absolute; background: #F8F2F2; border-radius: 20px"></div>
+    <div style="width: 212px; height: 35px; left: 135px; top: 278px; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 700; word-wrap: break-word">About Us</div>
+    <div style="width: 1018px; height: 384px; left: 135px; top: 365px; position: absolute"><span style="color: #752B2B; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">Together Culture is a community interest company.  <br/></span><span 
+        style="color: #752B2B; font-size: 32px; font-family: Inter; font-weight: 700; word-wrap: break-word">We build together culture.  <br/></span><span 
+        style="color: #752B2B; font-size: 24px; font-family: Inter; font-weight: 700; word-wrap: break-word">Think of 'Together Culture' as a noun. <br/><br/>You're capable of helping to shape 
+        an economy that is more inclusive and ecological. At Together Culture, we're shaping a world of work that supports everyone's wellbeing and shares prosperity.</span></div>
+        <div style="width: 159px; height: 40px; left: 963px; top: 723px; position: absolute; color: black; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">Join Us</div>
+    </div>
+  </body>
+</html>

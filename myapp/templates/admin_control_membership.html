@@ -3,71 +3,70 @@
   <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'base.css' %}">
-    <title>Admin Control Membership</title>
+    <title>Admin Dashboard</title>
   </head>
   <body>
     <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
-      
       <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
-      
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a> <!-- Add dashboard link when you finish the HTML dashboard page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a> <!-- Add events link when you finish the HTML events page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a><!--add Community link when you finish HTML community page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a> <!-- Add profile link when you finish the HTML profile page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'resources' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+          </form>
         </div>
       </div>
-      
-      <!-- Logo image -->
       <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
       
       <div class="container">
         <h2>Review and Approve New Member Profiles</h2>
-        <div class="pending-applications">
-            <h3>Pending Applications</h3>
-            <table>
+        <div class="application-actions">
+            <h3>Approve or Deny Applications</h3>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
+                        <th>Member Name</th>
+                        <th>Member Email</th>
                         <th>Interests</th>
+                        <th>Membership Type</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td id="memberNameCell">Joshua Ebuka</td>
+                        <td id="memberEmailCell">joshuaebuka@random.com</td>
+                        <td id="interestsCell">Photography, Writing</td>
+                        <td>
+                            <select id="membershipType" name="membershipType">
+                                <option value="individual">Individual Membership</option>
+                                <option value="community">Community Membership</option>
+                                <option value="key_access">Workspace Membership</option>
+                                <option value="creative_workspace">Organisational Membership</option>
+                            </select>
+                        </td>
+                        <td style="text-align: center;">
+                            <button type="button" id="approveButton" class="btn btn-success">Approve</button>
+                            <button type="button" id="denyButton" class="btn btn-danger">Deny</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="application-actions">
-            <h3>Approve or Deny Applications</h3>
-            <form id="applicationForm">
-                <label for="memberName">Member Name:</label>
-                <input type="text" id="memberName" name="memberName" readonly>
-                
-                <label for="memberEmail">Member Email:</label>
-                <input type="email" id="memberEmail" name="memberEmail" readonly>
-                
-                <label for="interests">Interests:</label>
-                <input type="text" id="interests" name="interests" readonly>
-                
-                <label for="membershipType">Assign Membership Type:</label>
-                <select id="membershipType" name="membershipType">
-                    <option value="individual">Individual Membership</option>
-                    <option value="community">Community Membership</option>
-                    <option value="key_access">Workspace Membership</option>
-                    <option value="creative_workspace">Organisational Membership</option>
-                </select>
-                
-                <button type="button" id="approveButton" class="btn btn-success">Approve</button>
-                <button type="button" id="denyButton" class="btn btn-danger">Deny</button>
-            </form>
         </div>
     </div>
     <script src="{% static 'js/admin_control_membership.js' %}"></script>

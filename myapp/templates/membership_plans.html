@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+  </head>
+  <body>
+    <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
+      
+      <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+      
+      <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="about_us.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="login.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
+        </div>
+      </div>
+      
+      <!-- Logo image -->
+      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+
+      <div style="width: 207px; height: 205px; left: 201px; top: 386px; position: absolute; background: #D9D9D9; display: flex; justify-content: center; align-items: center;">
+        <div style="color: black; font-size: 20px; font-family: Inter; font-weight: 700; text-align: center;">Community Membership</div>
+      </div>
+      <div style="width: 207px; height: auto; left: 201px; top: 601px; position: absolute; text-align: center; color: black; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+        Participation in Together Culture Democracy.<br/>Access place during our opening hours.<br/>Free or discounted access to our activities.<br/>A digital copy of our Living Book.<br/>A Together Culture badge.
+      </div>
+
+      <div style="width: 207px; height: 205px; left: 549px; top: 386px; position: absolute; background: #D9D9D9; display: flex; justify-content: center; align-items: center;">
+        <div style="color: black; font-size: 20px; font-family: Inter; font-weight: 700; text-align: center;">Workspace Membership</div>
+      </div>
+      <div style="width: 207px; height: auto; left: 549px; top: 601px; position: absolute; text-align: center; color: black; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+        All of the benefits of Community Membership, plus<br/>24/7 Access to place<br/>Inclusive hire for your own events and meetings<br/>Your own dedicated workspace and storage
+      </div>
+
+      <div style="width: 207px; height: 205px; left: 838px; top: 386px; position: absolute; background: #D9D9D9; display: flex; justify-content: center; align-items: center;">
+        <div style="color: black; font-size: 20px; font-family: Inter; font-weight: 700; text-align: center;">Organisational Membership</div>
+      </div>
+      <div style="width: 207px; height: auto; left: 838px; top: 601px; position: absolute; text-align: center; color: black; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+        Business Size<br/>Less than 20 people<br/>21 - 50 people<br/>Greater than 51 people
+      </div>
+    </div>
+  </body>
+</html>
