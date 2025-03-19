@@ -65,7 +65,7 @@ class Member(models.Model):
             ('Workspace Membership', 'Workspace Membership'),
             ('Organisational Membership', 'Organisational Membership'),
         ],
-        default='Individual Membership'  # Set default value
+        default='Individual Membership'
     )
     def __str__(self):
         return self.username

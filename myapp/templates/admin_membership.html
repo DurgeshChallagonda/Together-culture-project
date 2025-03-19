@@ -157,18 +157,15 @@
         }
 
         function changeMembership(memberId) {
-            // Show overlay and set member ID
             document.getElementById('changeMembershipOverlay').style.display = 'flex';
             document.getElementById('memberIdInput').value = memberId;
         }
 
         function closeOverlay() {
-            // Hide overlay
             document.getElementById('changeMembershipOverlay').style.display = 'none';
         }
 
         function saveMembershipChange() {
-            // Submit the form to save changes
             const form = document.getElementById('changeMembershipForm');
             form.action = `/change-membership/${form.memberId.value}/`;
             form.submit();
@@ -176,11 +173,9 @@
     </script>
     <script>
         function editMember(memberId) {
-            // Show overlay and populate form with member details
             document.getElementById('editMemberOverlay').style.display = 'flex';
             document.getElementById('editMemberIdInput').value = memberId;
 
-            // Fetch member details via AJAX
             fetch(`/get-member-details/${memberId}/`)
                 .then(response => response.json())
                 .then(data => {
@@ -197,12 +192,10 @@
         }
 
         function closeEditOverlay() {
-            // Hide overlay
             document.getElementById('editMemberOverlay').style.display = 'none';
         }
 
         function saveMemberEdit() {
-            // Submit the form to save changes
             const form = document.getElementById('editMemberForm');
             form.action = `/edit-member/${form.memberId.value}/`;
             form.submit();
