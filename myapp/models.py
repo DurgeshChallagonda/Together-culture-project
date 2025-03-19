@@ -1,12 +1,20 @@
+
 from django.db import models  # type: ignore
 
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    category = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 class User(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     def __str__(self):
         return f"{self.username} - {self.password}"
-    
+
 class Member(models.Model):
     Firstname = models.CharField(max_length=50)
     Lastname = models.CharField(max_length=50)
@@ -21,3 +29,4 @@ class Member(models.Model):
     Interests = models.CharField(max_length=50)
     def __str__(self):
         return self.username
+    

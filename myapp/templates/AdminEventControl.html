@@ -77,7 +77,7 @@
             <a href="#" class="link">About</a>
         </div>
         <div class="nav-link">
-            <a href="login.html" class="link">Login</a>
+            <a href="login.html" class="link">Logout</a>
         </div>
     </div>
     <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
@@ -97,14 +97,15 @@
                 <h2>Create Event</h2>
             </div>
             <div class="card-body">
-                <form>
+                <form action="{% url 'create_event' %}" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="eventName">Event Name</label>
-                        <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
+                        <input type="text" class="form-control" id="eventName" name="name" placeholder="Enter event name">
                     </div>
                     <div class="form-group">
                         <label for="eventCategory">Event Category</label>
-                        <select class="form-control" id="eventCategory">
+                        <select class="form-control" id="eventCategory" name="category">
                             <option>Workshops</option>
                             <option>Meetups</option>
                             <option>Creative Sessions</option>
@@ -112,7 +113,7 @@
                     </div>
                     <div class="form-group">
                         <label for="eventDescription">Event Description</label>
-                        <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+                        <textarea class="form-control" id="eventDescription" name="description" rows="3" placeholder="Enter event description"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Create Event</button>
                 </form>
@@ -133,30 +134,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for event in events %}
                         <tr>
-                            <td>Sample Event 1</td>
-                            <td>Workshops</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.category }}</td>
                             <td>
-                                <button class="btn btn-secondary btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm">Delete</button>
+                                <a href="edit_event.html" class="btn btn-secondary btn-sm">Edit</a>
+                                <form action="delete_event.html" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Sample Event 2</td>
-                            <td>Meetups</td>
-                            <td>
-                                <button class="btn btn-secondary btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sample Event 3</td>
-                            <td>Creative Sessions</td>
-                            <td>
-                                <button class="btn btn-secondary btn-sm">Edit</button>
-                                <button class="btn btn-danger btn-sm">Delete</button>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

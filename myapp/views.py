@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect # type: ignore
+from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from django.http import HttpResponse # type: ignore
 from django.contrib.auth.forms import UserCreationForm # type: ignore
 from django.contrib.auth import login as auth_login, authenticate # type: ignore
@@ -6,8 +6,46 @@ from django.contrib.auth.models import User # type: ignore
 from .models import Member
 from .serializers import RegisterSerializer
 from rest_framework.renderers import JSONRenderer # type: ignore
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Event
+from .forms import EventForm
+
+
 
 # Create your views here.
+
+def admin_event_control(request):
+    events = Event.objects.all()
+    return render(request, 'AdminEventControl.html', {'events': events})
+
+def create_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_event_control')
+    else:
+        form = EventForm()
+    return render(request, 'create_event.html', {'form': form})
+
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_event_control')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'edit_event.html', {'form': form})
+
+def delete_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    if request.method == 'POST':
+        event.delete()
+        return redirect('admin_event_control')
+    return render(request, 'delete_event.html', {'event': event})
+
 def home(request):
     return render(request, "home.html")
 
@@ -70,4 +108,4 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 def member_dashboard(request):
-    return render(request, 'member_dashboard.html')
+    return render(request, 'MemberDashboard.html')
