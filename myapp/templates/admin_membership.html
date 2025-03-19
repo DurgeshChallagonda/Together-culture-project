@@ -7,21 +7,28 @@
   </head>
   <body>
     <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
-
       <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
-      
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a> <!-- Add dashboard link when you finish the HTML dashboard page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a> <!-- Add events link when you finish the HTML events page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a><!--add Community link when you finish HTML community page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a> <!-- Add profile link when you finish the HTML profile page -->
+          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'resources' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+          </form>
         </div>
       </div>
       
@@ -65,12 +72,10 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Phone Number</th>
-                        <th>Gender</th>
-                        <th>Date of Birth</th>
-                        <th>Address</th>
                         <th>Interests</th>
                         <th>Date Joined</th>
                         <th>Membership Type</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,18 +86,127 @@
                         <td>{{ member.username }}</td>
                         <td>{{ member.email }}</td>
                         <td>{{ member.phone_number }}</td>
-                        <td>{{ member.gender }}</td>
-                        <td>{{ member.date_of_birth }}</td>
-                        <td>{{ member.address }}</td>
                         <td>{{ member.interests }}</td>
                         <td>{{ member.date_joined }}</td>
                         <td>{{ member.membership_type }}</td>
+                        <td>
+                            <button onclick="editMember('{{ member.id }}')" class="btn btn-secondary">Edit</button>
+                            <button onclick="changeMembership('{{ member.id }}')" class="btn btn-secondary">Change Membership</button>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    <div id="changeMembershipOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 400px; text-align: center;">
+            <h3>Change Membership</h3>
+            <form id="changeMembershipForm" method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" id="memberIdInput" name="memberId" value="">
+                <label for="newMembershipType">Select New Membership Type:</label>
+                <select id="newMembershipType" name="newMembershipType" style="width: 100%; margin: 10px 0;">
+                    <option value="Individual Membership">Individual Membership</option>
+                    <option value="Community Membership">Community Membership</option>
+                    <option value="Workspace Membership">Workspace Membership</option>
+                    <option value="Organisational Membership">Organisational Membership</option>
+                </select>
+                <button type="button" onclick="saveMembershipChange()" class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                <button type="button" onclick="closeOverlay()" class="btn btn-secondary">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div id="editMemberOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 400px; text-align: center;">
+            <h3>Edit Member Details</h3>
+            <form id="editMemberForm" method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" id="editMemberIdInput" name="memberId" value="">
+                <label for="editFirstName">First Name:</label>
+                <input type="text" id="editFirstName" name="first_name" style="width: 100%; margin: 10px 0;">
+                <label for="editLastName">Last Name:</label>
+                <input type="text" id="editLastName" name="last_name" style="width: 100%; margin: 10px 0;">
+                <label for="editUsername">Username:</label>
+                <input type="text" id="editUsername" name="username" style="width: 100%; margin: 10px 0;">
+                <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" name="email" style="width: 100%; margin: 10px 0;">
+                <label for="editPhoneNumber">Phone Number:</label>
+                <input type="text" id="editPhoneNumber" name="phone_number" style="width: 100%; margin: 10px 0;">
+                <label for="editInterests">Interests:</label>
+                <textarea id="editInterests" name="interests" style="width: 100%; margin: 10px 0;"></textarea>
+                <label for="editGender">Gender:</label>
+                <select id="editGender" name="gender" style="width: 100%; margin: 10px 0;">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <label for="editDateOfBirth">Date of Birth:</label>
+                <input type="date" id="editDateOfBirth" name="date_of_birth" style="width: 100%; margin: 10px 0;">
+                <label for="editAddress">Address:</label>
+                <textarea id="editAddress" name="address" style="width: 100%; margin: 10px 0;"></textarea>
+                <button type="button" onclick="saveMemberEdit()" class="btn btn-primary" style="margin-right: 10px;">Save</button>
+                <button type="button" onclick="closeEditOverlay()" class="btn btn-secondary">Cancel</button>
+            </form>
+        </div>
+    </div>
     <script src="{% static 'js/admin_membership.js' %}"></script>
+    <script>
+        function editMember(memberId) {
+            // Redirect to edit member page
+            window.location.href = `/edit-member/${memberId}/`;
+        }
+
+        function changeMembership(memberId) {
+            // Show overlay and set member ID
+            document.getElementById('changeMembershipOverlay').style.display = 'flex';
+            document.getElementById('memberIdInput').value = memberId;
+        }
+
+        function closeOverlay() {
+            // Hide overlay
+            document.getElementById('changeMembershipOverlay').style.display = 'none';
+        }
+
+        function saveMembershipChange() {
+            // Submit the form to save changes
+            const form = document.getElementById('changeMembershipForm');
+            form.action = `/change-membership/${form.memberId.value}/`;
+            form.submit();
+        }
+    </script>
+    <script>
+        function editMember(memberId) {
+            // Show overlay and populate form with member details
+            document.getElementById('editMemberOverlay').style.display = 'flex';
+            document.getElementById('editMemberIdInput').value = memberId;
+
+            // Fetch member details via AJAX
+            fetch(`/get-member-details/${memberId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('editFirstName').value = data.first_name;
+                    document.getElementById('editLastName').value = data.last_name;
+                    document.getElementById('editUsername').value = data.username;
+                    document.getElementById('editEmail').value = data.email;
+                    document.getElementById('editPhoneNumber').value = data.phone_number;
+                    document.getElementById('editInterests').value = data.interests;
+                    document.getElementById('editGender').value = data.gender;
+                    document.getElementById('editDateOfBirth').value = data.date_of_birth;
+                    document.getElementById('editAddress').value = data.address;
+                });
+        }
+
+        function closeEditOverlay() {
+            // Hide overlay
+            document.getElementById('editMemberOverlay').style.display = 'none';
+        }
+
+        function saveMemberEdit() {
+            // Submit the form to save changes
+            const form = document.getElementById('editMemberForm');
+            form.action = `/edit-member/${form.memberId.value}/`;
+            form.submit();
+        }
+    </script>
   </body>
 </html>

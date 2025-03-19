@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect # type: ignore
-from django.http import HttpResponse # type: ignore
+from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
+from django.http import HttpResponse, JsonResponse # type: ignore
 from django.contrib.auth.forms import UserCreationForm # type: ignore
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout # type: ignore
 from django.contrib.auth.models import User # type: ignore
@@ -7,20 +7,21 @@ from .models import Member, CustomUser  # Import CustomUser
 from .serializers import RegisterSerializer
 from rest_framework.renderers import JSONRenderer # type: ignore
 from django.db.models import F  # Import F for database field updates
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
     return render(request, "home.html")
 
-def Member(response):
-    if response.method == "POST":
-        form = UserCreationForm(response.POST)
+def register_member(request):  # Renamed from Member to register_member
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
         return redirect("/home")
     else:
         form = UserCreationForm()
-    return render(response, "register.html", {"form": form})
+    return render(request, "register.html", {"form": form})
 
 def login(request):
     return render(request, "login.html")
@@ -113,3 +114,49 @@ def admin_membership(request):
         members = members.filter(username__icontains=search_query)  # Filter by username (case-insensitive)
 
     return render(request, 'admin_membership.html', {'members': members})
+
+def change_membership(request, member_id):
+    if request.method == 'POST':
+        member = get_object_or_404(CustomUser, id=member_id)  # Use CustomUser instead of Member
+        new_membership_type = request.POST.get('newMembershipType')
+        if new_membership_type:
+            member.membership_type = new_membership_type
+            member.save()
+            messages.success(request, 'Membership type updated successfully.')
+        else:
+            messages.error(request, 'Invalid membership type.')
+        return redirect('admin_membership')  # Redirect to the admin membership page
+    else:
+        return redirect('admin_membership')  # Redirect if accessed via GET
+
+def get_member_details(request, member_id):
+    member = get_object_or_404(CustomUser, id=member_id)
+    data = {
+        'first_name': member.first_name,
+        'last_name': member.last_name,
+        'username': member.username,
+        'email': member.email,
+        'phone_number': member.phone_number,
+        'interests': member.interests,
+        'gender': member.gender,
+        'date_of_birth': member.date_of_birth,
+        'address': member.address,
+    }
+    return JsonResponse(data)
+
+def edit_member(request, member_id):
+    if request.method == 'POST':
+        member = get_object_or_404(CustomUser, id=member_id)
+        member.first_name = request.POST.get('first_name', member.first_name)
+        member.last_name = request.POST.get('last_name', member.last_name)
+        member.username = request.POST.get('username', member.username)
+        member.email = request.POST.get('email', member.email)
+        member.phone_number = request.POST.get('phone_number', member.phone_number)
+        member.interests = request.POST.get('interests', member.interests)
+        member.gender = request.POST.get('gender', member.gender)
+        member.date_of_birth = request.POST.get('date_of_birth', member.date_of_birth)
+        member.address = request.POST.get('address', member.address)
+        member.save()
+        messages.success(request, 'Member details updated successfully.')
+        return redirect('admin_membership')
+    return HttpResponse(status=405)

@@ -8,6 +8,10 @@ class CustomUser(AbstractUser):
         ('Workspace Membership', 'Workspace Membership'),
         ('Organisational Membership', 'Organisational Membership'),
     ]
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
     membership_type = models.CharField(
         max_length=50,
         choices=MEMBERSHIP_CHOICES,
@@ -15,7 +19,12 @@ class CustomUser(AbstractUser):
     )
     phone_number = models.CharField(max_length=15, blank=True, null=True)  # Add phone number
     interests = models.TextField(blank=True, null=True)  # Add interests
-    gender = models.CharField(max_length=10, blank=True, null=True)  # Add gender
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES,
+        blank=True,
+        null=True
+    )
     date_of_birth = models.DateField(blank=True, null=True)  # Add date of birth
     address = models.TextField(blank=True, null=True)  # Add address
 
@@ -48,5 +57,15 @@ class Member(models.Model):
     password = models.CharField(max_length=50)
     confirm_password = models.CharField(max_length=50)
     Interests = models.CharField(max_length=50)
+    membership_type = models.CharField(
+        max_length=50,
+        choices=[
+            ('Individual Membership', 'Individual Membership'),
+            ('Community Membership', 'Community Membership'),
+            ('Workspace Membership', 'Workspace Membership'),
+            ('Organisational Membership', 'Organisational Membership'),
+        ],
+        default='Individual Membership'  # Set default value
+    )
     def __str__(self):
         return self.username
