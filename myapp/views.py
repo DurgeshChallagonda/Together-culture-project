@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse # type: ignore
 from django.contrib.auth.forms import UserCreationForm # type: ignore
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout # type: ignore
 from django.contrib.auth.models import User # type: ignore
-from .models import Member, CustomUser  # Import CustomUser
+from .models import CustomUser  # Ensure only CustomUser is imported
 from .serializers import RegisterSerializer
 from rest_framework.renderers import JSONRenderer # type: ignore
 from django.db.models import F  # Import F for database field updates
@@ -48,7 +48,6 @@ def admin_login(request):
 def custom_admin_dashboard(request):
     if not request.user.is_staff:
         return redirect('admin_login')
-    # Add custom logic here
     return render(request, 'admin_dashboard.html')
 
 def admin_logout(request):
@@ -70,7 +69,7 @@ def member_login(request):
     return render(request, "member.html")
 
 def print_register(request):
-    items = Member.objects.all()
+    items = CustomUser.objects.all()  # Use CustomUser instead of Member
     serializer = RegisterSerializer(items, many=True)
     json_data = JSONRenderer().render(serializer.data)
     print(json_data)
@@ -110,8 +109,8 @@ def admin_membership(request):
     else:
         members = CustomUser.objects.filter(membership_type=membership_type)  # Filter by membership type
 
-    if search_query:  # If a search query is provided
-        members = members.filter(username__icontains=search_query)  # Filter by username (case-insensitive)
+    if search_query:
+        members = members.filter(username__icontains=search_query)  # Filter by username(case-insensitive)
 
     return render(request, 'admin_membership.html', {'members': members})
 
@@ -125,9 +124,9 @@ def change_membership(request, member_id):
             messages.success(request, 'Membership type updated successfully.')
         else:
             messages.error(request, 'Invalid membership type.')
-        return redirect('admin_membership')  # Redirect to the admin membership page
+        return redirect('admin_membership')
     else:
-        return redirect('admin_membership')  # Redirect if accessed via GET
+        return redirect('admin_membership')
 
 def get_member_details(request, member_id):
     member = get_object_or_404(CustomUser, id=member_id)
@@ -160,3 +159,33 @@ def edit_member(request, member_id):
         messages.success(request, 'Member details updated successfully.')
         return redirect('admin_membership')
     return HttpResponse(status=405)
+
+def add_member(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        interests = request.POST.get('interests')
+        gender = request.POST.get('gender')
+        date_of_birth = request.POST.get('date_of_birth')
+        address = request.POST.get('address')
+        membership_type = request.POST.get('membership_type')
+
+        CustomUser.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            phone_number=phone_number,
+            interests=interests,
+            gender=gender,
+            date_of_birth=date_of_birth,
+            address=address,
+            membership_type=membership_type,
+        )
+        messages.success(request, 'New member added successfully!')
+        return redirect('admin_membership')
+
+    return render(request, 'add_member.html')

@@ -57,6 +57,7 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
+        <button onclick="openAddMemberOverlay()" class="btn btn-primary" style="margin-bottom: 20px;">Add New Member</button>
         <div class="report-section">
             <h3>Engagement Reports</h3>
             <div id="reportContent">
@@ -149,10 +150,47 @@
             </form>
         </div>
     </div>
+    <div id="addMemberOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 400px; text-align: center;">
+            <h3>Add New Member</h3>
+            <form id="addMemberForm" method="post" action="{% url 'add_member' %}">
+                {% csrf_token %}
+                <label for="addFirstName">First Name:</label>
+                <input type="text" id="addFirstName" name="first_name" style="width: 100%; margin: 10px 0;" required>
+                <label for="addLastName">Last Name:</label>
+                <input type="text" id="addLastName" name="last_name" style="width: 100%; margin: 10px 0;" required>
+                <label for="addUsername">Username:</label>
+                <input type="text" id="addUsername" name="username" style="width: 100%; margin: 10px 0;" required>
+                <label for="addEmail">Email:</label>
+                <input type="email" id="addEmail" name="email" style="width: 100%; margin: 10px 0;" required>
+                <label for="addPhoneNumber">Phone Number:</label>
+                <input type="text" id="addPhoneNumber" name="phone_number" style="width: 100%; margin: 10px 0;" required>
+                <label for="addInterests">Interests:</label>
+                <textarea id="addInterests" name="interests" style="width: 100%; margin: 10px 0;"></textarea>
+                <label for="addGender">Gender:</label>
+                <select id="addGender" name="gender" style="width: 100%; margin: 10px 0;">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <label for="addDateOfBirth">Date of Birth:</label>
+                <input type="date" id="addDateOfBirth" name="date_of_birth" style="width: 100%; margin: 10px 0;">
+                <label for="addAddress">Address:</label>
+                <textarea id="addAddress" name="address" style="width: 100%; margin: 10px 0;"></textarea>
+                <label for="addMembershipType">Membership Type:</label>
+                <select id="addMembershipType" name="membership_type" style="width: 100%; margin: 10px 0;" required>
+                    <option value="Individual Membership">Individual Membership</option>
+                    <option value="Community Membership">Community Membership</option>
+                    <option value="Workspace Membership">Workspace Membership</option>
+                    <option value="Organisational Membership">Organisational Membership</option>
+                </select>
+                <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Add</button>
+                <button type="button" onclick="closeAddMemberOverlay()" class="btn btn-secondary">Cancel</button>
+            </form>
+        </div>
+    </div>
     <script src="{% static 'js/admin_membership.js' %}"></script>
     <script>
         function editMember(memberId) {
-            // Redirect to edit member page
             window.location.href = `/edit-member/${memberId}/`;
         }
 
@@ -199,6 +237,14 @@
             const form = document.getElementById('editMemberForm');
             form.action = `/edit-member/${form.memberId.value}/`;
             form.submit();
+        }
+
+        function openAddMemberOverlay() {
+            document.getElementById('addMemberOverlay').style.display = 'flex';
+        }
+
+        function closeAddMemberOverlay() {
+            document.getElementById('addMemberOverlay').style.display = 'none';
         }
     </script>
   </body>

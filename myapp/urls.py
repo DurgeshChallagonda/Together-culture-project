@@ -28,4 +28,5 @@ urlpatterns = [
     path('change-membership/<int:member_id>/', views.change_membership, name='change_membership'),
     path('get-member-details/<int:member_id>/', views.get_member_details, name='get_member_details'),
     path('edit-member/<int:member_id>/', views.edit_member, name='edit_member'),
+    path('add-member/', views.add_member, name='add_member'),
 ]
