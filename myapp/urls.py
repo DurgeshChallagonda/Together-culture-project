@@ -19,4 +19,6 @@ urlpatterns = [
     # new code
      path('course.html', TemplateView.as_view(template_name='course.html'), name='course'),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path("course/",views.course, name="course"),
+    path("events/",views.events, name="events"),
 ]

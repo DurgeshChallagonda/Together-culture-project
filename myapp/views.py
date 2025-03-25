@@ -73,4 +73,12 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 def member_dashboard(request):
-    return render(request, 'member_dashboard.html')
+    return render(request, 'MemberDashboard.html')
+
+# filepath: c:\Users\saile\OneDrive\Desktop\Together-culture-project\myapp\views.py
+
+def course(request):
+    return render(request, "course.html")
+
+def events(request):
+    return render(request, "events.html")
