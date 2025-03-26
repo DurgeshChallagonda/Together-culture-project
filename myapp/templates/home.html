@@ -11,7 +11,7 @@
       
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="resources.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
+          <a href="resources.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
         </div>
         <div class="nav-link" style="margin-left: 20px;">
           <a href="membership_plans.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
@@ -24,8 +24,9 @@
         </div>
       </div>
       
-      <!-- Logo image -->
-      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+      <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+        <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+      </a>
       
       <!-- Main image -->
       <img class="main-image" style="width: 100%; height: 859px; position: absolute; left: 0px; top: 106px; object-fit: cover;" src="{% static 'img/pic_1.png'%}" />
