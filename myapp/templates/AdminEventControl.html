@@ -84,21 +84,39 @@
     
     <div class="container mt-4">
         <h1>Admin Event Control</h1>
-        <p>As an Administrator: I want to create and manage different event categories for members, So that I can organize and classify events by type (e.g., educational, social, creative) for easier navigation.</p>
-        <p>Acceptance Criteria:</p>
-        <ul>
-            <li>I can create and categorize events into different types (e.g., workshops, meetups, creative sessions).</li>
-            <li>Members can filter events by category when browsing.</li>
-            <li>I can edit or delete events and adjust their categories as needed.</li>
-        </ul>
+        <p>Manage events by creating, editing, deleting, or filtering them by category.</p>
 
+        <!-- Filter Events by Category -->
         <div class="card mt-4">
             <div class="card-header">
-                <h2>Create Event</h2>
+                <h2>Filter Events</h2>
             </div>
             <div class="card-body">
-                <form action="{% url 'create_event' %}" method="post">
+                <form method="get" action="{% url 'admin_event_control' %}">
+                    <div class="form-group">
+                        <label for="categoryFilter">Filter by Category</label>
+                        <select class="form-control" id="categoryFilter" name="category" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            {% for category in categories %}
+                            <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Event Creation/Editing Form -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Create or Edit Event</h2>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'admin_event_control' %}" method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="event_id" id="event_id">
                     <div class="form-group">
                         <label for="eventName">Event Name</label>
                         <input type="text" class="form-control" id="eventName" name="name" placeholder="Enter event name">
@@ -106,20 +124,21 @@
                     <div class="form-group">
                         <label for="eventCategory">Event Category</label>
                         <select class="form-control" id="eventCategory" name="category">
-                            <option>Workshops</option>
-                            <option>Meetups</option>
-                            <option>Creative Sessions</option>
+                            <option value="Workshops">Workshops</option>
+                            <option value="Meetups">Meetups</option>
+                            <option value="Creative Sessions">Creative Sessions</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="eventDescription">Event Description</label>
                         <textarea class="form-control" id="eventDescription" name="description" rows="3" placeholder="Enter event description"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Event</button>
+                    <button type="submit" class="btn btn-primary">Save Event</button>
                 </form>
             </div>
         </div>
 
+        <!-- Event Management Table -->
         <div class="card mt-4">
             <div class="card-header">
                 <h2>Manage Events</h2>
@@ -139,8 +158,8 @@
                             <td>{{ event.name }}</td>
                             <td>{{ event.category }}</td>
                             <td>
-                                <a href="edit_event.html" class="btn btn-secondary btn-sm">Edit</a>
-                                <form action="delete_event.html" method="post" style="display:inline;">
+                                <button class="btn btn-secondary btn-sm" onclick="editEvent({{ event.id }}, '{{ event.name }}', '{{ event.category }}', '{{ event.description }}')">Edit</button>
+                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
@@ -152,6 +171,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function editEvent(id, name, category, description) {
+            document.getElementById('event_id').value = id;
+            document.getElementById('eventName').value = name;
+            document.getElementById('eventCategory').value = category;
+            document.getElementById('eventDescription').value = description;
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

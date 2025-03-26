@@ -26,16 +26,6 @@
             border-color: #007BFF;
             color: #FFFFFF; /* White */
         }
-        .btn-secondary {
-            background-color: #6C757D; /* Secondary Blue */
-            border-color: #6C757D;
-            color: #FFFFFF; /* White */
-        }
-        .btn-success {
-            background-color: #28A745; /* Success Green */
-            border-color: #28A745;
-            color: #FFFFFF; /* White */
-        }
         .header {
             background: #6b4848; /* Dark brown */
             width: 100%;
@@ -65,6 +55,7 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header"></div>
     <div class="nav-links">
         <div class="nav-link">
@@ -80,76 +71,83 @@
             <a href="login.html" class="link">Logout</a>
         </div>
     </div>
-    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
-    
+    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'images/logo.png' %}" />
+
+    <!-- Main Content -->
     <div class="container mt-4">
         <h1>Welcome to Member Dashboard</h1>
-        <p>This is the place where you can explore your thoughts at our place Together Culture</p>
-        
+        <p>This is the place where you can explore your thoughts at our place Together Culture.</p>
+
+        <!-- Buttons -->
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-primary mx-3">
-                <i class="fas fa-user"></i> Membership status
+                <i class="fas fa-user"></i> Membership Status
             </button>
             <button type="button" class="btn btn-secondary mx-3">
                 <i class="fas fa-envelope"></i> Messages
             </button>
-            <button type="button" class="btn btn-success mx-3">Benefits</button>
+            <a href="{% url 'membership_benefits' %}" class="btn btn-success mx-3">
+                <i class="fas fa-gift"></i> Benefits
+            </a>
         </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <div class="card">
-                <h2 class="card-header">Upcoming Events</h2>
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-md-6 d-flex align-items-center">
-                            <img src="myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842.jpg" alt="Image 1" class="img-fluid mr-3" style="width: 100px; height: 100px;">
-                            <div>
-                                <h5>Holi Event</h5>
-                                <button type="button" class="btn btn-primary">Book</button>
+
+        <!-- Upcoming Events -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2 class="card-header">Upcoming Events</h2>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            {% for event in events %}
+                            <div class="col-md-6 d-flex align-items-center">
+                                <img src="{% static 'images/event-placeholder.jpg' %}" alt="{{ event.name }}" class="img-fluid mr-3" style="width: 100px; height: 100px;">
+                                <div>
+                                    <h5>{{ event.name }}</h5>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'book_event' event.id %}'">Book</button>
+                                </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        <div class="col-md-6 d-flex align-items-center">
-                            <img src="myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842.jpg" alt="Image 2" class="img-fluid mr-3" style="width: 100px; height: 100px;">
-                            <div>
-                                <h5>Diwali Event</h5>
-                                <button type="button" class="btn btn-primary">Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Modules -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h2 class="card-header">Course Modules</h2>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <img src="{% static 'images/module-placeholder.jpg' %}" alt="Judo Classes" class="img-fluid mr-3" style="width: 100px; height: 100px;">
+                                <div>
+                                    <h5>Judo Classes</h5>
+                                    <button type="button" class="btn btn-primary">Join</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <img src="{% static 'images/module-placeholder.jpg' %}" alt="Ballet Dance Classes" class="img-fluid mr-3" style="width: 100px; height: 100px;">
+                                <div>
+                                    <h5>Ballet Dance Classes</h5>
+                                    <button type="button" class="btn btn-primary">Join</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card mt-6">
-                <h2 class="card-header">Course Modules</h2>
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-md-6 d-flex align-items-center">
-                            <img src="myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842.jpg" alt="Image 1" class="img-fluid mr-3" style="width: 100px; height: 100px;">
-                            <div>
-                                <h5>Judo classes</h5>
-                                <button type="button" class="btn btn-primary">Join</button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-center">
-                            <img src="myapp/images/happy-diwali-2025-festive-mandala-design-featuring-lit-diya_1188274-8842.jpg" alt="Image 2" class="img-fluid mr-3" style="width: 100px; height: 100px;">
-                            <div>
-                                <h5>Ballet dance Classes</h5>
-                                <button type="button" class="btn btn-primary">Join</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+        <!-- Community Board -->
+        <div class="card mt-5">
+            <div class="card-body">
+                <h2 class="card-title">Community Board</h2>
+                <p>Stay updated with the latest community news and events.</p>
+                <a href="{% url 'membership_benefits' %}" class="btn btn-primary">View Benefits</a>
             </div>
         </div>
     </div>
-    <div class="card mt-5">
-        <div class="card-body">
-            <h2 class="card-title">Community Board</h2>
-            <p>Stay updated with the latest community news and events.</p>
-        </div>
-    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
