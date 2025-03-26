@@ -13,6 +13,7 @@ from django.shortcuts import render, redirect
 from .models import Event
 from .forms import EventForm
 from .models import MembershipBenefit
+
 from .forms import BookingForm
 
 
@@ -143,12 +144,11 @@ def create_event(request):
     return render(request, 'AdminEventControl.html', {'form': form, 'events': Event.objects.all()})
 
 def membership_dashboard(request):
-    benefits = MembershipBenefit.objects.all()
-    utilized_benefits = benefits.filter(utilized=True)
-    available_benefits = benefits.filter(utilized=False)
+    base_plan_benefits = MembershipBenefit.objects.filter(plan_type='Base')  # Base plan benefits
+    upgraded_plan_benefits = MembershipBenefit.objects.filter(plan_type='Upgraded')  # Upgraded plan benefits
     return render(request, 'MembershipBreakdownBenefits.html', {
-        'utilized_benefits': utilized_benefits,
-        'available_benefits': available_benefits,
+        'base_plan_benefits': base_plan_benefits,
+        'upgraded_plan_benefits': upgraded_plan_benefits,
     })
 
 def book_event(request, event_id):
@@ -163,3 +163,16 @@ def book_event(request, event_id):
     else:
         form = BookingForm()
     return render(request, 'BookEvent.html', {'form': form, 'event': event})
+
+class MembershipBenefit(models.Model):
+    PLAN_CHOICES = [
+        ('Base', 'Base Plan'),
+        ('Upgraded', 'Upgraded Plan'),
+    ]
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    plan_type = models.CharField(max_length=50, choices=PLAN_CHOICES, default='Base')
+    utilized = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name

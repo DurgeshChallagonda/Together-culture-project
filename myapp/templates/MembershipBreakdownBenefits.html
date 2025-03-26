@@ -72,44 +72,49 @@
         <h1>Membership Dashboard</h1>
         <p>View a summary of your membership benefits below.</p>
 
-        <!-- Utilized Benefits -->
+        <!-- Base Plan Benefits -->
         <div class="card mt-4">
             <div class="card-header">
-                <h2>Utilized Benefits</h2>
+                <h2>Base Plan Benefits (Utilized)</h2>
             </div>
             <div class="card-body">
-                {% if utilized_benefits %}
+                {% if base_plan_benefits %}
                 <ul class="list-group">
-                    {% for benefit in utilized_benefits %}
+                    {% for benefit in base_plan_benefits %}
                     <li class="list-group-item">
                         <strong>{{ benefit.name }}</strong>: {{ benefit.description }}
                     </li>
                     {% endfor %}
                 </ul>
                 {% else %}
-                <p>No benefits utilized yet.</p>
+                <p>No base plan benefits utilized yet.</p>
                 {% endif %}
             </div>
         </div>
 
-        <!-- Available Benefits -->
+        <!-- Upgraded Plan Benefits -->
         <div class="card mt-4">
             <div class="card-header">
-                <h2>Available Benefits</h2>
+                <h2>Upgraded Plan Benefits</h2>
             </div>
             <div class="card-body">
-                {% if available_benefits %}
+                {% if upgraded_plan_benefits %}
                 <ul class="list-group">
-                    {% for benefit in available_benefits %}
+                    {% for benefit in upgraded_plan_benefits %}
                     <li class="list-group-item">
                         <strong>{{ benefit.name }}</strong>: {{ benefit.description }}
                     </li>
                     {% endfor %}
                 </ul>
                 {% else %}
-                <p>All benefits have been utilized.</p>
+                <p>No upgraded plan benefits available.</p>
                 {% endif %}
             </div>
+        </div>
+
+        <!-- Upgrade Plan Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'upgrade_plan' %}" class="btn btn-success btn-lg">Upgrade Plan</a>
         </div>
     </div>
 

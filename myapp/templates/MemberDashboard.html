@@ -103,7 +103,7 @@
                                 <img src="{% static 'images/event-placeholder.jpg' %}" alt="{{ event.name }}" class="img-fluid mr-3" style="width: 100px; height: 100px;">
                                 <div>
                                     <h5>{{ event.name }}</h5>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'book_event' event.id %}'">Book</button>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'event/book/<int:event_id>/' %}'">Book</button>
                                 </div>
                             </div>
                             {% endfor %}
