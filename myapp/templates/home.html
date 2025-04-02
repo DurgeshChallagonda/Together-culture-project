@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html>
   <head>
@@ -80,4 +81,85 @@
       </a>
     </div>
   </body>
+=======
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+  </head>
+  <body>
+    <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
+      
+      <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+      
+      <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="resources.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="membership_plans.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="about_us.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="login.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
+        </div>
+      </div>
+      
+      <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+        <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+      </a>
+      
+      <img class="main-image" style="width: 100%; height: 859px; position: absolute; left: 0px; top: 106px; object-fit: cover;" src="{% static 'img/pic_1.png'%}" />
+      <div class="main-heading" style="color: #ffffff; text-align: center; font-family: 'Itim-Regular', sans-serif; font-size: 64px; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); top: 420px; height: 176.96px; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
+        CHECK OUT OUR COMMUNITY
+      </div>
+      <a href="member/login" class="cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 578.37px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+        <div class="cta-text" style="color: #000000; text-align: center; font-family: 'Jomolhari-Regular', sans-serif; font-size: 32px; font-weight: 400; width: 209px; height: 40px;">
+          Find out more
+        </div>
+      </a>
+    </div>
+    
+    <div class="second-section" style="width: 100%; height: 844px; position: static;">
+      <div style="width: 100%; height: 844px; position: static;">
+        <img class="second-image" style="width: 100%; height: 844px; position: absolute; left: 0px; top: 965px; object-fit: cover;" src="{% static 'img/pic_2.png'%}" />
+        <div class="second-heading" style="color: #fefefe; text-align: center; font-family: 'Itim-Regular', sans-serif; font-size: 64px; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); top: 1202px; height: 213.65px; width: 100%; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
+          CHECK OUR CHEAP WORKSPACES
+        </div>
+      </div>
+    </div>
+    <a href="membership_plans.html" class="second-cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 1309px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+      <div class="second-cta-text" style="color: #000000; text-align: center; font-family: 'Jomolhari-Regular', sans-serif; font-size: 32px; font-weight: 400; width: 209px; height: 40px;">
+        Find out more
+      </div>
+    </a>
+
+    <div class="divider" style="width: 100%; height: 9px; background-color: #6b4848; position: absolute; left: 0; top: 956px;"></div>
+
+    <div class="footer" style="background: #6b4848; width: 100%; height: 426px; position: absolute; left: 0px; top: 1809px;"></div>
+
+    <div class="newsletter-form">
+      <div class="input-container" style="background: #f8f2f2; width: 375.89px; height: 45.96px; position: absolute; left: 56px; top: 1923px;">
+        <input type="text" name="first_name" placeholder="First Name" style="width: calc(100% - 20px); height: 100%; border: none; background: transparent; padding: 0 10px; font-family: 'Inter-Regular', sans-serif; font-size: 20px; color: #000;">
+      </div>
+      <div class="input-container" style="background: #f8f2f2; width: 375.89px; height: 45.96px; position: absolute; left: 849.11px; top: 1923px;">
+        <input type="email" name="email" placeholder="Email" style="width: calc(100% - 20px); height: 100%; border: none; background: transparent; padding: 0 10px; font-family: 'Inter-Regular', sans-serif; font-size: 20px; color: #000;">
+      </div>
+      <div class="input-container" style="background: #f8f2f2; width: 375.89px; height: 45.96px; position: absolute; left: 452.55px; top: 1923px;">
+        <input type="text" name="last_name" placeholder="Last Name" style="width: calc(100% - 20px); height: 100%; border: none; background: transparent; padding: 0 10px; font-family: 'Inter-Regular', sans-serif; font-size: 20px; color: #000;">
+      </div>
+      <div class="newsletter-heading" style="color: #ffffff; text-align: left; font-family: 'HermeneusOne-Regular', sans-serif; font-size: 40px; font-weight: var(--var-sds-typography-weight-bold, 400); position: absolute; left: 56px; top: 1836px; width: 574px; height: 56px;">
+        Sign up to our newsletter:
+      </div>
+      <a href="#" class="signup-button" style="background: #f8f2f2; border-radius: 20px; width: 249px; height: 52px; position: absolute; left: 65px; top: 2000px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+        <div class="signup-text" style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 40px; font-weight: 700; width: 159px; height: 40px;">
+          Sign up
+        </div>
+      </a>
+    </div>
+  </body>
+>>>>>>> Stashed changes
 </html>

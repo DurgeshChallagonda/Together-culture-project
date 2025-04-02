@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Course Control</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f1e3e3; /* Light background */
+            color: #212121; /* Matte black */
+        }
+        .navbar, .card, .btn {
+            background-color: #FFFFFF; /* White */
+            color: #212121; /* Matte black */
+        }
+        .navbar-brand, .nav-link, .card-header, .card-title, .btn {
+            color: #212121 !important; /* Matte black */
+        }
+        .card-body {
+            background-color: #FFFFFF; /* White */
+        }
+        .btn-primary {
+            background-color: #007BFF; /* Blue */
+            border-color: #007BFF;
+            color: #FFFFFF; /* White */
+        }
+        .btn-secondary {
+            background-color: #6C757D; /* Secondary Blue */
+            border-color: #6C757D;
+            color: #FFFFFF; /* White */
+        }
+        .btn-success {
+            background-color: #28A745; /* Success Green */
+            border-color: #28A745;
+            color: #FFFFFF; /* White */
+        }
+        .header {
+            background: #6b4848; /* Dark brown */
+            width: 100%;
+            height: 106px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 106px;
+            padding-right: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link {
+            margin-left: 20px;
+        }
+        .nav-link a {
+            color: #ffffff;
+            font-family: 'Inter-Bold', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
+        <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+        <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+          <div class="nav-link" style="margin-left: 20px;">
+            <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
+          </div>
+          <div class="nav-link" style="margin-left: 20px;">
+            <a href="{% url 'admin_course_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Courses</a>
+          </div>
+          <div class="nav-link" style="margin-left: 20px;">
+            <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
+          </div>
+          <div class="nav-link" style="margin-left: 20px;">
+            <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a>
+          </div>
+          <div class="nav-link" style="margin-left: 20px;">
+            <a href="{% url 'resources' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
+          </div>
+          <div class="nav-link" style="margin-left: 20px;">
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+            </form>
+          </div>
+        </div>
+        <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+    
+    <div class="container mt-4">
+        <h1>Admin Course Control</h1>
+        <p>Manage courses by creating, editing, deleting, or filtering them by category.</p>
+
+        <!-- Filter Courses by Category -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Filter Courses</h2>
+            </div>
+            <div class="card-body">
+                <form method="get" action="{% url 'admin_course_control' %}">
+                    <div class="form-group">
+                        <label for="categoryFilter">Filter by Category</label>
+                        <select class="form-control" id="categoryFilter" name="category" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            {% if categories %}
+                                {% for category in categories %}
+                                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>
+                                    {{ category }}
+                                </option>
+                                {% endfor %}
+                            {% else %}
+                                <option disabled>No categories available</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </form>
+                <form method="get" action="{% url 'admin_course_control' %}">
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="endDate">End Date</label>
+                            <input type="date" class="form-control" id="endDate" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+                        </div>
+                        <div class="form-group col-md-2 align-self-end">    
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Course Creation/Editing Form -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Create Course</h2>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'create_course' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="courseName">Course Name</label>
+                        <input type="text" class="form-control" id="courseName" name="name" placeholder="Enter course name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseCategory">Course Category</label>
+                        <select class="form-control" id="courseCategory" name="category" required>
+                            <option value="Programming" {% if selected_category == "Programming" %}selected{% endif %}>Programming</option>
+                            <option value="Design" {% if selected_category == "Design" %}selected{% endif %}>Design</option>
+                            <option value="Marketing" {% if selected_category == "Marketing" %}selected{% endif %}>Marketing</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="selected_category" value="{{ selected_category }}">
+                    <div class="form-group">
+                        <label for="courseDate">Course Date</label>
+                        <input type="date" class="form-control" id="courseDate" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDescription">Course Description</label>
+                        <textarea class="form-control" id="courseDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseImage">Course Image</label>
+                        <input type="file" class="form-control-file" id="courseImage" name="image">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h1>Manage Courses</h1>
+        <p>Here you can view, edit, or delete saved courses.</p>
+
+        <!-- Display Saved Courses -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Saved Courses</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td>
+                                {% if course.image %}
+                                <img src="{{ course.image.url }}" alt="{{ course.name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                No Image
+                                {% endif %}
+                            </td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.category.name }}</td>
+                            <td>{{ course.date }}</td>
+                            <td>
+                                <a href="{% url 'edit_course' course.id %}" class="btn btn-primary btn-sm" title="Edit this course">Edit</a>
+                                <form action="{% url 'delete_course' course.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete this course">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No courses found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editCourse(id, name, category, description) {
+            document.getElementById('course_id').value = id;
+            document.getElementById('courseName').value = name;
+            document.getElementById('courseCategory').value = category;
+            document.getElementById('courseDescription').value = description;
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     filterButton.addEventListener('click', function() {
         const membershipType = document.getElementById('membershipType').value;
-        // Implement the filter logic here
+        // filter logic
         console.log('Filtering by membership type:', membershipType);
     });
 
     searchButton.addEventListener('click', function() {
         const searchMember = document.getElementById('searchMember').value;
-        // Implement the search logic here
+        // search logic
         console.log('Searching for member:', searchMember);
     });
 });
