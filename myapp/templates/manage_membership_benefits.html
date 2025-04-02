@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <title>Manage Benefits for {{ membership.name }}</title>
+  </head>
+  <body>
+    <div class="main-container" style="padding: 20px;">
+      <h1>Manage Benefits for {{ membership.name }}</h1>
+      <h2>Current Benefits</h2>
+      <ul>
+        {% for benefit in membership.benefits.all %}
+        <li>
+          {{ benefit.name }}
+          <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="benefit_id" value="{{ benefit.id }}">
+            <button type="submit" name="action" value="remove" style="color: red;">Remove</button>
+          </form>
+        </li>
+        {% empty %}
+        <li>No benefits assigned.</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Add New Benefit</h2>
+      <form method="post">
+        {% csrf_token %}
+        <select name="benefit_id" style="width: 50%; margin-right: 10px;">
+          {% for benefit in all_benefits %}
+          <option value="{{ benefit.id }}">{{ benefit.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" name="action" value="add" style="background: #6b4848; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px;">Add</button>
+      </form>
+
+      <a href="{% url 'admin_membershiptypes' %}" style="display: inline-block; margin-top: 20px;">Back to Membership Plans</a>
+    </div>
+  </body>
+</html>

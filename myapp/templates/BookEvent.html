@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+{% load static %}
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,18 +61,27 @@
             <a href="#" class="link">Resources</a>
         </div>
         <div class="nav-link">
+<<<<<<< Updated upstream
             <a href="#" class="link">Membership</a>
+=======
+            <a href="MemberDashboard.html" class="link">Membership</a>
+>>>>>>> Stashed changes
         </div>
         <div class="nav-link">
             <a href="#" class="link">About</a>
         </div>
         <div class="nav-link">
+<<<<<<< Updated upstream
             <a href="{% url 'logout' %}" class="link">Logout</a>
+=======
+            <a href="logout.html" class="link">Logout</a>
+>>>>>>> Stashed changes
         </div>
     </div>
     <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'images/logo.png' %}" />
 
     <!-- Main Content -->
+<<<<<<< Updated upstream
     <div class="container mt-4">
         <h1>Book Event: {{ event.name }}</h1>
         <p>Please fill out the form below to book your spot for this event.</p>
@@ -95,6 +108,28 @@
         </div>
     </div>
 
+=======
+    <div class="container mt-5">
+        <h1>Book Event</h1>
+        <p id="event-name" class="lead"></p>
+        <form action="{% url 'add_to_user_events' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="event_name" id="event-name-input" value="{{ event.name }}">
+            <button type="submit" class="btn btn-primary">Add to My Events</button>
+        </form>
+    </div>
+
+    <script>
+        // Extract event name from query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventName = urlParams.get('event_name');
+        if (eventName) {
+            document.getElementById('event-name').textContent = `You are booking: ${eventName}`;
+            document.getElementById('event-name-input').value = eventName;
+        }
+    </script>
+
+>>>>>>> Stashed changes
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

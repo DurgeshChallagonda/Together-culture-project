@@ -62,7 +62,14 @@
             <a href="#" class="link">About</a>
         </div>
         <div class="nav-link">
+<<<<<<< Updated upstream
             <a href="login.html" class="link">Logout</a>
+=======
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+            </form>
+>>>>>>> Stashed changes
         </div>
     </div>
     <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
@@ -72,6 +79,7 @@
         <h1>Membership Dashboard</h1>
         <p>View a summary of your membership benefits below.</p>
 
+<<<<<<< Updated upstream
         <!-- Base Plan Benefits -->
         <div class="card mt-4">
             <div class="card-header">
@@ -118,6 +126,38 @@
         </div>
     </div>
 
+=======
+        <!-- Membership Type -->
+        <div class="alert alert-info" role="alert">
+            <strong>Membership Type:</strong> <span id="membershipType">{{ user.membership_type }}</span>
+        </div>
+
+        <!-- Membership Benefits -->
+        <h3>Benefits:</h3>
+        <ul>
+            {% if user.membership_type.benefits.exists %}
+                {% for benefit in user.membership_type.benefits.all %}
+                    <li>{{ benefit.name }}: {{ benefit.description }}</li>
+                {% endfor %}
+            {% else %}
+                <li>No benefits available for this membership.</li>
+            {% endif %}
+        </ul>
+
+        <!-- Upgrade Plan Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'request_upgrade' %}" class="btn btn-success btn-lg">Upgrade Plan</a>
+            <p class="mt-2 text-muted">Note: Your request will need to be verified by an admin before the membership type is updated.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dynamically set membership type
+        const membershipType = "{{ user.membership_type }}"; // Retrieved from the backend
+        document.getElementById("membershipType").textContent = membershipType;
+    </script>
+
+>>>>>>> Stashed changes
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
