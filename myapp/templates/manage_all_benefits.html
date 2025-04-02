@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <title>Manage All Benefits</title>
+  </head>
+  <body>
+    <div class="main-container" style="padding: 20px;">
+      <h1>Manage All Benefits</h1>
+      <h2>Existing Benefits</h2>
+      <ul>
+        {% for benefit in benefits %}
+        <li>
+          {{ benefit.name }} - {{ benefit.description }}
+          <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="benefit_id" value="{{ benefit.id }}">
+            <button type="submit" name="action" value="delete" style="color: red;">Delete</button>
+          </form>
+        </li>
+        {% empty %}
+        <li>No benefits available.</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Add New Benefit</h2>
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Benefit Name" style="width: 30%; margin-right: 10px;" />
+        <textarea name="description" placeholder="Benefit Description" style="width: 50%; margin-right: 10px;"></textarea>
+        <button type="submit" name="action" value="add" style="background: #6b4848; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px;">Add</button>
+      </form>
+
+      <a href="{% url 'custom_admin_dashboard' %}" style="display: inline-block; margin-top: 20px;">Back to Dashboard</a>
+    </div>
+  </body>
+</html>

@@ -18,6 +18,6 @@ class Command(BaseCommand):
                     is_active=user.is_active,
                     is_superuser=user.is_superuser,
                     date_joined=user.date_joined,
-                    membership_type='Individual Membership'  # Default membership type
+                    membership_type='Individual Membership'  # Default membership
                 )
         self.stdout.write(self.style.SUCCESS('Successfully migrated users to CustomUser model.'))

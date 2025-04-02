@@ -34,37 +34,40 @@
       <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
       
       <div class="container">
-        <h2>Review and Approve New Member Profiles</h2>
+        <h2>Review and Approve Membership Upgrade Requests</h2>
         <div class="application-actions">
-            <h3>Approve or Deny Applications</h3>
+            <h3>Pending Upgrade Requests</h3>
             <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr>
                         <th>Member Name</th>
                         <th>Member Email</th>
-                        <th>Interests</th>
-                        <th>Membership Type</th>
+                        <th>Requested Membership Type</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for request in upgrade_requests %}
                     <tr>
-                        <td id="memberNameCell">Joshua Ebuka</td>
-                        <td id="memberEmailCell">joshuaebuka@random.com</td>
-                        <td id="interestsCell">Photography, Writing</td>
-                        <td>
-                            <select id="membershipType" name="membershipType">
-                                <option value="individual">Individual Membership</option>
-                                <option value="community">Community Membership</option>
-                                <option value="key_access">Workspace Membership</option>
-                                <option value="creative_workspace">Organisational Membership</option>
-                            </select>
-                        </td>
+                        <td>{{ request.user.get_full_name }}</td>
+                        <td>{{ request.user.email }}</td>
+                        <td>{{ request.requested_type.name }}</td>
                         <td style="text-align: center;">
-                            <button type="button" id="approveButton" class="btn btn-success">Approve</button>
-                            <button type="button" id="denyButton" class="btn btn-danger">Deny</button>
+                            <form action="{% url 'approve_upgrade' request.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            <form action="{% url 'deny_upgrade' request.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Deny</button>
+                            </form>
                         </td>
                     </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No pending upgrade requests.</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

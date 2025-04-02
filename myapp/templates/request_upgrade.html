@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Membership Upgrade</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Request Membership Upgrade</h1>
+        <p>Please select the membership type you want to upgrade to. Your request will be reviewed by an admin.</p>
+
+        <!-- Display success messages -->
+        {% if messages %}
+            <div class="alert alert-success">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'request_upgrade' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="membershipType">Select Membership Type:</label>
+                <select class="form-control" id="membershipType" name="membershipType" required>
+                    {% for membership in memberships %}
+                        <option value="{{ membership.id }}">{{ membership.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+            <a href="{% url 'membership_benefits' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

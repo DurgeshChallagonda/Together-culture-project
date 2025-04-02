@@ -10,10 +10,10 @@
       <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
+          <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
+          <a href="{% url 'admin_event_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
           <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
@@ -42,16 +42,17 @@
                 <label for="membershipType">Filter by Membership Type:</label>
                 <select id="membershipType" name="membershipType">
                     <option value="all" {% if request.GET.membershipType == "all" %}selected{% endif %}>All</option>
-                    <option value="Individual Membership" {% if request.GET.membershipType == "Individual Membership" %}selected{% endif %}>Individual Membership</option>
-                    <option value="Community Membership" {% if request.GET.membershipType == "Community Membership" %}selected{% endif %}>Community Membership</option>
-                    <option value="Workspace Membership" {% if request.GET.membershipType == "Workspace Membership" %}selected{% endif %}>Workspace Membership</option>
-                    <option value="Organisational Membership" {% if request.GET.membershipType == "Organisational Membership" %}selected{% endif %}>Organisational Membership</option>
+                    {% for membership in memberships %}
+                    <option value="{{ membership.name }}" {% if request.GET.membershipType == membership.name %}selected{% endif %}>
+                      {{ membership.name }}
+                    </option>
+                    {% endfor %}
                 </select>
                 <button type="submit" class="btn btn-primary">Filter</button>
             </form>
         </div>
         <div class="search-section">
-            <form method="get" action="">
+            <form method="get" action="{% url 'admin_membership' %}">
                 <label for="searchMember">Search Member:</label>
                 <input type="text" id="searchMember" name="searchMember" placeholder="Enter member name or email" value="{{ request.GET.searchMember }}">
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -81,20 +82,23 @@
                 </thead>
                 <tbody>
                     {% for member in members %}
-                    <tr>
-                        <td>{{ member.first_name }}</td>
-                        <td>{{ member.last_name }}</td>
-                        <td>{{ member.username }}</td>
-                        <td>{{ member.email }}</td>
-                        <td>{{ member.phone_number }}</td>
-                        <td>{{ member.interests }}</td>
-                        <td>{{ member.date_joined }}</td>
-                        <td>{{ member.membership_type }}</td>
-                        <td>
-                            <button onclick="editMember('{{ member.id }}')" class="btn btn-secondary">Edit</button>
-                            <button onclick="changeMembership('{{ member.id }}')" class="btn btn-secondary">Change Membership</button>
-                        </td>
-                    </tr>
+                        {% if not member.is_superuser %}
+                            <tr>
+                                <td>{{ member.first_name }}</td>
+                                <td>{{ member.last_name }}</td>
+                                <td>{{ member.username }}</td>
+                                <td>{{ member.email }}</td>
+                                <td>{{ member.phone_number }}</td>
+                                <td>{{ member.interests }}</td>
+                                <td>{{ member.date_joined }}</td>
+                                <td>{{ member.membership_type }}</td>
+                                <td>
+                                    <button onclick="editMember('{{ member.id }}')" class="btn btn-secondary">Edit</button>
+                                    <button onclick="changeMembership('{{ member.id }}')" class="btn btn-secondary">Change Membership</button>
+                                    <button onclick="deleteMember('{{ member.id }}')" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -108,10 +112,9 @@
                 <input type="hidden" id="memberIdInput" name="memberId" value="">
                 <label for="newMembershipType">Select New Membership Type:</label>
                 <select id="newMembershipType" name="newMembershipType" style="width: 100%; margin: 10px 0;">
-                    <option value="Individual Membership">Individual Membership</option>
-                    <option value="Community Membership">Community Membership</option>
-                    <option value="Workspace Membership">Workspace Membership</option>
-                    <option value="Organisational Membership">Organisational Membership</option>
+                    {% for membership in memberships %}
+                    <option value="{{ membership.name }}">{{ membership.name }}</option>
+                    {% endfor %}
                 </select>
                 <button type="button" onclick="saveMembershipChange()" class="btn btn-primary" style="margin-right: 10px;">Save</button>
                 <button type="button" onclick="closeOverlay()" class="btn btn-secondary">Cancel</button>
@@ -178,10 +181,9 @@
                 <textarea id="addAddress" name="address" style="width: 100%; margin: 10px 0;"></textarea>
                 <label for="addMembershipType">Membership Type:</label>
                 <select id="addMembershipType" name="membership_type" style="width: 100%; margin: 10px 0;" required>
-                    <option value="Individual Membership">Individual Membership</option>
-                    <option value="Community Membership">Community Membership</option>
-                    <option value="Workspace Membership">Workspace Membership</option>
-                    <option value="Organisational Membership">Organisational Membership</option>
+                    {% for membership in memberships %}
+                    <option value="{{ membership.name }}">{{ membership.name }}</option>
+                    {% endfor %}
                 </select>
                 <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Add</button>
                 <button type="button" onclick="closeAddMemberOverlay()" class="btn btn-secondary">Cancel</button>
@@ -207,6 +209,32 @@
             const form = document.getElementById('changeMembershipForm');
             form.action = `/change-membership/${form.memberId.value}/`;
             form.submit();
+        }
+
+        function deleteMember(memberId) {
+            if (confirm("Are you sure you want to delete this member?")) {
+                fetch(`/delete-member/${memberId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value // Ensure CSRF token is passed
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Member deleted successfully.");
+                        location.reload();
+                    } else {
+                        return response.json().then(data => {
+                            alert(data.message || "Failed to delete member.");
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while deleting the member.");
+                });
+            }
         }
     </script>
     <script>

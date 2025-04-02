@@ -10,19 +10,13 @@
       <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
+          <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
+          <a href="{% url 'admin_event_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
           <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
-        </div>
-        <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a>
-        </div>
-        <div class="nav-link" style="margin-left: 20px;">
-          <a href="{% url 'resources' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
           <form action="{% url 'logout' %}" method="post" style="display: inline;">
@@ -52,49 +46,69 @@
         </div>
         <div style="width: 221px; height: 83px; position: static">
           <div style="background: #d9d9d9; width: 221px; height: 83px; position: absolute; left: 363px; top: 253px; display: flex; align-items: flex-start; justify-content: flex-start; padding: 10px;">
-            <a href="#" style="display: flex; align-items: center; text-decoration: none;">
-              <img class="_150-1509057-message-icon-png-1" style="width: 25px; height: 20px; object-fit: cover; margin-right: 10px;" src="{% static 'img/messages.png' %}" />
+            <a href="{% url 'admin_membershiptypes' %}" style="display: flex; align-items: center; text-decoration: none;">
+              <img class="_150-1509057-message-icon-png-1" style="width: 25px; height: 20px; object-fit: cover; margin-right: 10px;" src="{% static 'img/benefits.png' %}" />
               <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 15px; font-weight: 700;">
-                Messages
+                All Membership Plans
+              </div>
+            </a>
+          </div>
+        </div>  
+        <div style="width: 221px; height: 83px; position: static">
+          <div style="background: #d9d9d9; width: 221px; height: 83px; position: absolute; left: 661px; top: 253px; display: flex; align-items: flex-start; justify-content: flex-start; padding: 10px;">
+            <a href="{% url 'manage_all_benefits' %}" style="display: flex; align-items: center; text-decoration: none;">
+              <img class="benefits-icon" style="width: 32px; height: 32px; object-fit: cover; margin-right: 10px;" src="{% static 'img/benefits.png' %}" />
+              <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 15px; font-weight: 700;">
+                Manage Benefits
               </div>
             </a>
           </div>
         </div>
-        <div style="background: #d9d9d9; width: 300px; height: 207px; position: absolute; right: 65px; top: 573px;"></div>
-        <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; right: 65px; top: 586px; width: 245.12px; height: 27.4px;">
-          Queries and feedback
-        </div>
         <img class="black-icon-11201-1" style="width: 31.14px; height: 20.76px; position: absolute; left: 69.02px; top: 463px; object-fit: cover;" src="{% static 'img/.png' %}" />
         <div style="background: #d9d9d9; width: 773.53px; height: 357px; position: absolute; left: 65px; top: 423px;"></div>
         <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; left: 113.22px; top: 459px; width: 193.88px; height: 27.4px;">
-          Upcoming Events
+          <a href="{% url 'admin_event_control' %}" style="text-decoration: none; color: inherit;">Upcoming Events</a>
         </div>
-        <div style="width: 770px; height: 362px; position: static">
-          <div style="background: #d9d9d9; width: 770px; height: 362px; position: absolute; left: 65px; top: 424px;"></div>
-          <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; left: 111px; top: 449px; width: 193px; height: 33px;">
-            Upcoming Events
-          </div>
-          <img class="black-icon-11201-12" style="width: 31px; height: 25px; position: absolute; left: 79px; top: 447px; object-fit: cover;" src="{% static 'img/events.png' %}" />
-          <img class="image-2" style="width: 113px; height: 97px; position: absolute; left: 94px; top: 493px; object-fit: cover;" src="image-20.png" />
-          <img class="image-3" style="width: 117px; height: 103px; position: absolute; left: 90px; top: 640px; object-fit: cover;" src="image-30.png" />
-          <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; left: 264px; top: 541px; width: 146px; height: 53px;">
-            Diwali Event
-          </div>
-          <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; left: 256px; top: 677px; width: 160px; height: 37px;">
-            New Year Event
-          </div>
+        <div style="background: #d9d9d9; width: 773.53px; height: auto; position: absolute; left: 65px; top: 500px; padding: 20px; border-radius: 10px; box-sizing: border-box;">
+          {% for event in events %}
+            <div style="margin-bottom: 15px; padding: 10px; background: #ffffff; border-radius: 5px; display: flex; align-items: center; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; box-sizing: border-box;">
+              <img src="{% static 'media/' %}{{ event.image }}" alt="Event Image" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 5px;">
+              <div>
+                <h3 style="margin: 0; font-size: 18px; font-family: 'Inter-Bold', sans-serif;">{{ event.name }}</h3>
+                <p style="margin: 5px 0; font-size: 14px; font-family: 'Inter', sans-serif;">Date: {{ event.date }}</p>
+              </div>
+            </div>
+          {% empty %}
+            <p style="font-size: 14px; font-family: 'Inter', sans-serif;">No upcoming events.</p>
+          {% endfor %}
         </div>
         <div style="width: 221px; height: 83px; position: static; margin-top: 20px;">
           <div style="background: #d9d9d9; width: 221px; height: 83px; position: absolute; right: 65px; top: 423px;"></div>
         </div>
         <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; right: 65px; top: 440px; width: 193.88px; height: 27.4px;">
-          Course Modules
-        </div>
-        <img class="image-4" style="width: 134.61px; height: 77px; position: absolute; right: 65px; top: 473px; object-fit: cover;" src="image-40.png" />
-        <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 15px; font-weight: 700; position: absolute; right: 65px; top: 498px; width: 112px; height: 59px;">
-          AI Course
+          <a href="{% url 'admin_course_control' %}" style="text-decoration: none; color: inherit;">Course Modules</a>
         </div>
       </div>
     </div>
+    <script>
+      let subMenu = document.getElementById('subMenu');
+
+      function toggleMenu() {
+        if (subMenu.style.display === "none" || subMenu.style.display === "") {
+          subMenu.style.display = "block";
+        } else {
+          subMenu.style.display = "none";
+        }
+      }
+
+      // Close the dropdown if clicked outside
+      window.addEventListener('click', function(event) {
+        if (!event.target.matches('.user-pic')) {
+          if (subMenu.style.display === "block") {
+            subMenu.style.display = "none";
+          }
+        }
+      });
+    </script>
   </body>
 </html>
