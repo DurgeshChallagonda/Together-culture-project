@@ -17,6 +17,7 @@
       <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="image-10.png" />
       
       <div class="container">
+<<<<<<< Updated upstream
         <h2>Review and Approve New Member Profiles</h2>
         <div class="pending-applications">
             <h3>Pending Applications</h3>
@@ -26,10 +27,45 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Interests</th>
+=======
+        <h2>Review and Approve Membership Upgrade Requests</h2>
+        <div class="application-actions">
+            <h3>Pending Upgrade Requests</h3>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Member Email</th>
+                        <th>Requested Membership Type</th>
+>>>>>>> Stashed changes
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< Updated upstream
+=======
+                    {% for request in upgrade_requests %}
+                    <tr>
+                        <td>{{ request.user.get_full_name }}</td>
+                        <td>{{ request.user.email }}</td>
+                        <td>{{ request.requested_type.name }}</td>
+                        <td style="text-align: center;">
+                            <form action="{% url 'approve_upgrade' request.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            <form action="{% url 'deny_upgrade' request.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Deny</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No pending upgrade requests.</td>
+                    </tr>
+                    {% endfor %}
+>>>>>>> Stashed changes
                 </tbody>
             </table>
         </div>

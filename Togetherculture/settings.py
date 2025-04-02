@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -127,3 +128,23 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# Specify the custom user model
+AUTH_USER_MODEL = 'myapp.CustomUser'
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media', 'event_images')
+
+# Update LOGIN_URL to match your login view's URL pattern
+LOGIN_URL = '/login/'  # Adjust this to the correct URL for your login page
+
+# Session timeout settings
+SESSION_COOKIE_AGE = 1200  # 20 minutes (1200 seconds)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Expire session when the browser is closed
+SESSION_SAVE_EVERY_REQUEST = True  # Reset session timeout on every request

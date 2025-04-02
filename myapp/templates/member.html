@@ -85,14 +85,20 @@
         <div class="nav-link" style="margin-left: 20px;">
           <a href="{% url 'login_html' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
         </div>
+<<<<<<< Updated upstream
       </div>
       
       <!-- Logo image -->
       <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="image-10.png" />
+=======
+      </div>     
+
+      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+>>>>>>> Stashed changes
 
       <div class="container">
         <h1>Member Login</h1>
-        <form action="{% url 'member_login' %}" method="post">
+        <form action="{% url 'customuser_login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -107,9 +113,19 @@
             </div>
             <button type="submit">Login</button>
             {% if error %}
-                <p style="color: red;">Wrong username or password</p>
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
             {% endif %}
         </form>
+        {% if user.is_authenticated %}
+            <script>
+                window.location.href = "{% url 'member_dashboard' %}";
+            </script>
+        {% endif %}
       </div>
     </div>
 </body>
