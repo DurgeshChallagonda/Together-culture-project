@@ -10,7 +10,7 @@
 <body>
     <div class="container mt-4">
         <h1>{{ event.name }}</h1>
-        <img src="{% static 'media/' %}{{ event.image }}" alt="{{ event.name }}" class="img-fluid mb-3" style="width: 100%; max-width: 400px; object-fit: cover;">
+        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="img-fluid mb-3" style="width: 100%; max-width: 400px; object-fit: cover;">
         <p><strong>Date:</strong> {{ event.date }}</p>
         <p><strong>Description:</strong> {{ event.description }}</p>
         {% if event.id in booked_event_ids %}

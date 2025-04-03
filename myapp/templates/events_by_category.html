@@ -146,7 +146,7 @@
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <a href="{% url 'event_details' event.id %}">
-                            <img src="{% static 'media/' %}{{ event.image }}" alt="{{ event.name }}" class="img-fluid">
+                            <img src="{{ event.image.url }}" alt="{{ event.name }}" class="img-fluid">
                         </a>
                     </div>
                     <div class="col-md-9">

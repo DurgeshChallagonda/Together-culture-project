@@ -304,15 +304,25 @@ def admin_event_control(request):
     return render(request, 'AdminEventControl.html', context)
 
 def edit_event(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+    event = get_object_or_404(Event, id=event_id)  # Ensure the event exists
+    categories = Event.objects.values_list('category', flat=True).distinct()  # Fetch distinct categories
     if request.method == 'POST':
-        form = EventForm(request.POST, request.FILES, instance=event)  # Ensure request.FILES is included
+        form = EventForm(request.POST, request.FILES, instance=event)  # Include request.FILES
         if form.is_valid():
-            form.save()
+            if 'image' in request.FILES:  # Check if a new image is uploaded
+                event.image = request.FILES['image']  # Save the uploaded image file
+            form.save()  # Save the form, including the updated image
             return redirect('admin_event_control')
+        else:
+            messages.error(request, 'Failed to update the event. Please check the form for errors.')
     else:
         form = EventForm(instance=event)
-    return render(request, 'edit_event.html', {'form': form})
+    return render(request, 'edit_event.html', {
+        'form': form,
+        'event': event,
+        'categories': categories,
+        'event_date': event.date,  # Explicitly pass the saved event date
+    })
 
 def delete_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
@@ -323,9 +333,12 @@ def delete_event(request, event_id):
 
 def create_event(request):
     if request.method == 'POST':
-        form = EventForm(request.POST, request.FILES)  # Ensure request.FILES is included
+        form = EventForm(request.POST, request.FILES)  # Include request.FILES
         if form.is_valid():
-            form.save()
+            event = form.save(commit=False)
+            if 'image' in request.FILES:  # Check if an image is uploaded
+                event.image = request.FILES['image']  # Save the uploaded image file
+            event.save()  # Save the event instance
             return redirect('admin_event_control')
         else:
             messages.error(request, 'Failed to create event. Please check the form for errors.')

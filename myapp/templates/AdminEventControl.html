@@ -144,7 +144,7 @@
                 <h2>Create Event</h2>
             </div>
             <div class="card-body">
-                <form action="{% url 'create_event' %}" method="post" enctype="multipart/form-data">
+                <form action="{% url 'create_event' %}" method="post" enctype="multipart/form-data"> <!-- Add enctype -->
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="eventName">Event Name</label>
@@ -201,7 +201,7 @@
                         <tr>
                             <td>
                                 {% if event.image %}
-                                <img src="{% static 'media/' %}{{ event.image }}" alt="{{ event.name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                <img src="{{ event.image.url }}" alt="{{ event.name }}" style="width: 50px; height: 50px; object-fit: cover;">
                                 {% else %}
                                 No Image
                                 {% endif %}

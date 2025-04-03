@@ -38,24 +38,19 @@
       <div class="container">
         <h2>Membership Management</h2>
         <div class="filter-section">
-            <form method="get" action="">
+            <form method="get" action="{% url 'admin_membership' %}">
                 <label for="membershipType">Filter by Membership Type:</label>
                 <select id="membershipType" name="membershipType">
-                    <option value="all" {% if request.GET.membershipType == "all" %}selected{% endif %}>All</option>
+                    <option value="all" {% if request.GET.membershipType == "all" or not request.GET.membershipType %}selected{% endif %}>All</option>
                     {% for membership in memberships %}
-                    <option value="{{ membership.name }}" {% if request.GET.membershipType == membership.name %}selected{% endif %}>
+                    <option value="{{ membership.id }}" {% if request.GET.membershipType == membership.id|stringformat:"s" %}selected{% endif %}>
                       {{ membership.name }}
                     </option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </form>
-        </div>
-        <div class="search-section">
-            <form method="get" action="{% url 'admin_membership' %}">
-                <label for="searchMember">Search Member:</label>
+                <label for="searchMember" style="margin-left: 20px;">Search Member:</label>
                 <input type="text" id="searchMember" name="searchMember" placeholder="Enter member name or email" value="{{ request.GET.searchMember }}">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Apply</button>
             </form>
         </div>
         <button onclick="openAddMemberOverlay()" class="btn btn-primary" style="margin-bottom: 20px;">Add New Member</button>

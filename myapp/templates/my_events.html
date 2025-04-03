@@ -141,7 +141,7 @@
             {% for booking in booked_events %}
             <div class="col-md-6 d-flex align-items-center mb-3">
                 <a href="{% url 'event_details' booking.event.id %}">
-                    <img src="{% static 'media/' %}{{ booking.event.image }}" alt="{{ booking.event.name }}" class="img-fluid mr-3" style="width: 100px; height: 100px; object-fit: cover;">
+                    <img src="{{ booking.event.image.url }}" alt="{{ booking.event.name }}" class="img-fluid mr-3" style="width: 100px; height: 100px; object-fit: cover;">
                 </a>
                 <div>
                     <a href="{% url 'event_details' booking.event.id %}" style="text-decoration: none; color: inherit;">
