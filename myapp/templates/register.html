@@ -5,7 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create an Account</title>
-    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #d3d3d3;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            margin: 150px auto;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            display: block;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size: 12px;
+            color: black;
+        }
+    </style>
 </head>
 <body>
     <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
@@ -26,55 +78,90 @@
           <a href="login.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
         </div>
       </div>
-      
-      <!-- Logo image -->
-      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="image-10.png" />
 
-      <div class="container" style="padding-left: 180px;">
-        <h2>New Registeration</h2>
-        <form method="POST" action="/" class="form-group">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="form-group">
-                <label for="Firstname">First Name</label>
-                <input type="text" class="form-control" id="Firstname" name="Firstname" required>
-            </div>
-            <div class="form-group">
-                <label for="Lastname">Last Name</label>
-                <input type="text" class="form-control" id="Lastname" name="Lastname" required>
-            </div>
-            <div class="form-group">
-                <label for="DateofBirth">Date of Birth:</label>
-                <input type="date" id="DateofBirth" name="DateofBirth" required>
-            </div>
-            <div class="form-group">
-                <label for="Gender">Gender:</label>
-                <br>
-                <input type="radio" name="gender" value="male"> Male
-                <input type="radio" name="gender" value="female"> Female
-            </div>
-            <div class="form-group">
-                <label for="MobileNumber">Mobile Number</label>
-                <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" required>
-            </div>
-            <div class="form-group">
-                <label for="username">Address</label>
-                <input type="text" class="form-control" id="Address" name="Address" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="text">Interests</label>
-                <input type="text" class="form-control" id="Interests" name="Interests" required>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-        </form>
-        <p class="mt-3">Already have an account? <a href="login.html">Login here</a>.</p>
-      </div>
-    </div>
+{% block content %}
+<div class="container">
+    <h2>Register</h2>
+    <!-- Add message display -->
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <p style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="POST" class="form-group" onsubmit="return validatePasswords()">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Firstname">First Name</label>
+            <input type="text" class="form-control" id="Firstname" name="Firstname" placeholder="First Name" required />
+        </div>
+        <div class="form-group">
+            <label for="Lastname">Last Name</label>
+            <input type="text" class="form-control" id="Lastname" name="Lastname" placeholder="Last Name" required />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+        </div>
+        <div class="form-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" class="form-control" id="password2" name="confirm_password" placeholder="Confirm Password" required />
+        </div>
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number</label>
+            <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Phone Number" required />
+        </div>
+        <div class="form-group">
+            <label for="Gender">Gender</label>
+            <select class="form-control" id="Gender" name="Gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="DateOfBirth">Date of Birth</label>
+            <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required />
+        </div>
+        <div class="form-group">
+            <label for="Address">Address</label>
+            <textarea class="form-control" id="Address" name="Address" placeholder="Enter your address" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Interests">Interests</label>
+            <input type="text" class="form-control" id="Interests" name="Interests" placeholder="Enter your interests" required />
+        </div>
+        <!-- Removed MembershipType field -->
+        <button type="submit" class="btn btn-primary">Register</button>
+        {% if e %}
+            <p>{{ e }}</p>
+        {% endif %}
+    </form>
+    <p class="mt-3">Already have an account? <a href="login.html">Login here</a>.</p>
+</div>
+<script>
+    function validatePasswords() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('password2').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match. Please try again.');
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}
 </body>
 </html>

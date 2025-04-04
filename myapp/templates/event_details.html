@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.name }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>{{ event.name }}</h1>
+        <img src="{{ event.image.url }}" alt="{{ event.name }}" class="img-fluid mb-3" style="width: 100%; max-width: 400px; object-fit: cover;">
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        {% if event.id in booked_event_ids %}
+            <button type="button" class="btn btn-secondary" disabled>Already Added</button>
+        {% else %}
+            <form method="post" action="{% url 'add_to_user_events' %}">
+                {% csrf_token %}
+                <input type="hidden" name="event_id" value="{{ event.id }}">
+                <button type="submit" class="btn btn-primary">Add to My Events</button>
+            </form>
+        {% endif %}
+        <a href="{% url 'my_events' %}" class="btn btn-primary">Back to My Events</a>
+    </div>
+</body>
+</html>

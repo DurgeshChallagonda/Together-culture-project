@@ -11,32 +11,28 @@
       
       <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
+          <a href="resources.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a> <!-- Add resources link when you finish the HTML resources page -->
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
+          <a href="membership_plans.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a> <!-- Add membership link when you finish the HTML membership page -->
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-          <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About</a> <!-- Add about link when you finish the HTML about page -->
+          <a href="about_us.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
           <a href="login.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Login</a>
         </div>
-        <div class="nav-link" style="margin-left: 20px;">
-          <a href="course.html" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">course</a>
-        </div>
       </div>
       
-      <!-- Logo image -->
-      <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="image-10.png" />
+      <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+        <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+      </a>
       
-      <!-- Main image -->
-      <img class="main-image" style="width: 100%; height: 859px; position: absolute; left: 0px; top: 106px; object-fit: cover;" src="team-386673-1280-10.png" />
+      <img class="main-image" style="width: 100%; height: 859px; position: absolute; left: 0px; top: 106px; object-fit: cover;" src="{% static 'img/pic_1.png'%}" />
       <div class="main-heading" style="color: #ffffff; text-align: center; font-family: 'Itim-Regular', sans-serif; font-size: 64px; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); top: 420px; height: 176.96px; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
         CHECK OUT OUR COMMUNITY
       </div>
-
-      <a href="#" class="cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 578.37px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+      <a href="member/login" class="cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 578.37px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
         <div class="cta-text" style="color: #000000; text-align: center; font-family: 'Jomolhari-Regular', sans-serif; font-size: 32px; font-weight: 400; width: 209px; height: 40px;">
           Find out more
         </div>
@@ -45,15 +41,13 @@
     
     <div class="second-section" style="width: 100%; height: 844px; position: static;">
       <div style="width: 100%; height: 844px; position: static;">
-        <!--second image-->
-        <img class="second-image" style="width: 100%; height: 844px; position: absolute; left: 0px; top: 965px; object-fit: cover;" src="_1-10.png" />
+        <img class="second-image" style="width: 100%; height: 844px; position: absolute; left: 0px; top: 965px; object-fit: cover;" src="{% static 'img/pic_2.png'%}" />
         <div class="second-heading" style="color: #fefefe; text-align: center; font-family: 'Itim-Regular', sans-serif; font-size: 64px; font-weight: 400; position: absolute; left: 50%; transform: translateX(-50%); top: 1202px; height: 213.65px; width: 100%; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
           CHECK OUR CHEAP WORKSPACES
         </div>
       </div>
     </div>
-
-    <a href="#" class="second-cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 1309px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+    <a href="membership_plans.html" class="second-cta-button" style="width: 268px; height: 50px; background-color: #6b4848; position: absolute; left: 50%; transform: translateX(-50%); top: 1309px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
       <div class="second-cta-text" style="color: #000000; text-align: center; font-family: 'Jomolhari-Regular', sans-serif; font-size: 32px; font-weight: 400; width: 209px; height: 40px;">
         Find out more
       </div>

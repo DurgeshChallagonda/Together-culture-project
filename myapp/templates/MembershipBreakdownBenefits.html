@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f1e3e3; /* Light background */
+            color: #212121; /* Matte black */
+        }
+        .navbar, .card, .btn {
+            background-color: #FFFFFF; /* White */
+            color: #212121; /* Matte black */
+        }
+        .navbar-brand, .nav-link, .card-header, .card-title, .btn {
+            color: #212121 !important; /* Matte black */
+        }
+        .card-body {
+            background-color: #FFFFFF; /* White */
+        }
+        .header {
+            background: #6b4848; /* Dark brown */
+            width: 100%;
+            height: 106px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 106px;
+            padding-right: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-link {
+            margin-left: 20px;
+        }
+        .nav-link a {
+            color: #ffffff;
+            font-family: 'Inter-Bold', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header"></div>
+    <div class="nav-links">
+        <div class="nav-link">
+            <a href="#" class="link">Resources</a>
+        </div>
+        <div class="nav-link">
+            <a href="#" class="link">Membership</a>
+        </div>
+        <div class="nav-link">
+            <a href="#" class="link">About</a>
+        </div>
+        <div class="nav-link">
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+            </form>
+        </div>
+    </div>
+    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="logo.png" />
+
+    <!-- Membership Dashboard -->
+    <div class="container mt-4">
+        <h1>Membership Dashboard</h1>
+        <p>View a summary of your membership benefits below.</p>
+
+        <!-- Membership Type -->
+        <div class="alert alert-info" role="alert">
+            <strong>Membership Type:</strong> <span id="membershipType">{{ user.membership_type }}</span>
+        </div>
+
+        <!-- Membership Benefits -->
+        <h3>Benefits:</h3>
+        <ul>
+            {% if user.membership_type.benefits.exists %}
+                {% for benefit in user.membership_type.benefits.all %}
+                    <li>{{ benefit.name }}: {{ benefit.description }}</li>
+                {% endfor %}
+            {% else %}
+                <li>No benefits available for this membership.</li>
+            {% endif %}
+        </ul>
+
+        <!-- Upgrade Plan Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'request_upgrade' %}" class="btn btn-success btn-lg">Upgrade Plan</a>
+            <p class="mt-2 text-muted">Note: Your request will need to be verified by an admin before the membership type is updated.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dynamically set membership type
+        const membershipType = "{{ user.membership_type }}"; // Retrieved from the backend
+        document.getElementById("membershipType").textContent = membershipType;
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
