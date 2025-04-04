@@ -72,7 +72,7 @@
         <div style="background: #d9d9d9; width: 773.53px; height: auto; position: absolute; left: 65px; top: 500px; padding: 20px; border-radius: 10px; box-sizing: border-box;">
           {% for event in events %}
             <div style="margin-bottom: 15px; padding: 10px; background: #ffffff; border-radius: 5px; display: flex; align-items: center; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; box-sizing: border-box;">
-              <img src="{% static 'media/' %}{{ event.image }}" alt="Event Image" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 5px;">
+              <img src="{{ event.image.url }}" alt="Event Image" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 5px;">
               <div>
                 <h3 style="margin: 0; font-size: 18px; font-family: 'Inter-Bold', sans-serif;">{{ event.name }}</h3>
                 <p style="margin: 5px 0; font-size: 14px; font-family: 'Inter', sans-serif;">Date: {{ event.date }}</p>
@@ -82,11 +82,23 @@
             <p style="font-size: 14px; font-family: 'Inter', sans-serif;">No upcoming events.</p>
           {% endfor %}
         </div>
-        <div style="width: 221px; height: 83px; position: static; margin-top: 20px;">
-          <div style="background: #d9d9d9; width: 221px; height: 83px; position: absolute; right: 65px; top: 423px;"></div>
-        </div>
-        <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; right: 65px; top: 440px; width: 193.88px; height: 27.4px;">
+        <div style="background: #d9d9d9; width: 773.53px; height: 357px; position: absolute; right: 65px; top: 423px;"></div>
+        <div style="color: #000000; text-align: left; font-family: 'Inter-Bold', sans-serif; font-size: 20px; font-weight: 700; position: absolute; right: 565px; top: 440px; width: 193.88px; height: 27.4px;">
           <a href="{% url 'admin_course_control' %}" style="text-decoration: none; color: inherit;">Course Modules</a>
+        </div>
+        <div style="background: #d9d9d9; width: 773.53px; height: auto; position: absolute; right: 65px; top: 500px; padding: 20px; border-radius: 10px; box-sizing: border-box;">
+          {% for course in courses %}
+            <div style="margin-bottom: 15px; padding: 10px; background: #ffffff; border-radius: 5px; display: flex; align-items: center; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; box-sizing: border-box;">
+              <img src="{{ course.image.url }}" alt="Course Image" style="width: 50px; height: 50px; margin-right: 10px; border-radius: 5px;">
+              <div>
+                <h3 style="margin: 0; font-size: 18px; font-family: 'Inter-Bold', sans-serif;">{{ course.name }}</h3>
+                <p style="margin: 5px 0; font-size: 14px; font-family: 'Inter', sans-serif;">Date: {{ course.date }}</p>
+                <p style="margin: 5px 0; font-size: 14px; font-family: 'Inter', sans-serif;">Description: {{ course.description }}</p>
+              </div>
+            </div>
+          {% empty %}
+            <p style="font-size: 14px; font-family: 'Inter', sans-serif;">No course modules available.</p>
+          {% endfor %}
         </div>
       </div>
     </div>

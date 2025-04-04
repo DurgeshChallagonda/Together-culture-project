@@ -65,9 +65,11 @@ def custom_admin_dashboard(request):
         return redirect('admin_login')
     events = Event.objects.filter(date__gte=now()).order_by('date')[:3]
     memberships = Membership.objects.prefetch_related('benefits').all()  # Fetch memberships with benefits
+    courses = Course.objects.all()
     return render(request, 'admin_dashboard.html', {
         'events': events,
         'memberships': memberships,
+        'courses': courses,
     })
 
 def admin_logout(request):
