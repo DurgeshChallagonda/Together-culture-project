@@ -191,6 +191,25 @@
                 });
             });
         </script>
+        <script>
+            function toggleMenu() {
+                const subMenu = document.getElementById('subMenu');
+                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                    subMenu.style.display = 'block';
+                } else {
+                    subMenu.style.display = 'none';
+                }
+            }
+    
+            // Close the dropdown if clicked outside
+            document.addEventListener('click', function (event) {
+                const subMenu = document.getElementById('subMenu');
+                const userPic = document.querySelector('.user-pic');
+                if (subMenu && !subMenu.contains(event.target) && !userPic.contains(event.target)) {
+                    subMenu.style.display = 'none';
+                }
+            });
+        </script>
     </div>
 </body>
 </html>
