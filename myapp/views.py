@@ -350,16 +350,25 @@ def create_event(request):
 
 @login_required(login_url='login')  # Redirect to login page if not authenticated
 def member_dashboard(request):
-    events = Event.objects.filter(date__gte=now()).order_by('date')[:3]  # Fetch the 3 closest upcoming events
+    events = Event.objects.none()  # Default to no events
+
+    if request.user.is_authenticated and request.user.membership_type:
+        if request.user.membership_type.name == "Community Membership":
+            events = Event.objects.filter(category="Meetups")
+        elif request.user.membership_type.name == "Creative Workspace Membership":
+            events = Event.objects.filter(category__in=["Meetups", "Creative Sessions"])
+        elif request.user.membership_type.name == "Key Access Membership":
+            events = Event.objects.all()
+        elif request.user.membership_type.name == "Individual Membership":
+            events = Event.objects.none()  # Explicitly show no events
+
+    # Fetch the IDs of events already booked by the user
     user_booked_event_ids = Booking.objects.filter(user=request.user).values_list('event_id', flat=True)
     for event in events:
-        # Check if the event is already booked by the user
+        # Mark events as booked if the user has already booked them
         event.is_booked = event.id in user_booked_event_ids
 
     joined_courses = request.user.joined_courses.all()  # Fetch courses joined by the user
-
-    # Debugging: Log the joined courses
-    logger.debug(f"User {request.user.username} has joined the following courses: {list(joined_courses)}")
 
     return render(request, "MemberDashboard.html", {
         'events': events,
@@ -524,16 +533,29 @@ def profile(request):
     return render(request, 'profile.html')
 
 def events_by_category(request):
-    categories = {
-        "Meetups": Event.objects.filter(category="Meetups"),
-        "Creative Sessions": Event.objects.filter(category="Creative Sessions"),
-        "Workshops": Event.objects.filter(category="Workshops"),
-    }
+    events = Event.objects.none()  # Default to no events
+
+    if request.user.is_authenticated and request.user.membership_type:
+        if request.user.membership_type.name == "Community Membership":
+            events = Event.objects.filter(category="Meetups")
+        elif request.user.membership_type.name == "Creative Workspace Membership":
+            events = Event.objects.filter(category__in=["Meetups", "Creative Sessions"])
+        elif request.user.membership_type.name == "Key Access Membership":
+            events = Event.objects.all()
+        elif request.user.membership_type.name == "Individual Membership":
+            events = Event.objects.none()  # Explicitly show no events
+
     user_booked_event_ids = Booking.objects.filter(user=request.user).values_list('event_id', flat=True)
-    for category, events in categories.items():
-        for event in events:
-            # Check if the event is already booked by the user
+    categories = {
+        "Meetups": events.filter(category="Meetups"),
+        "Creative Sessions": events.filter(category="Creative Sessions"),
+        "Workshops": events.filter(category="Workshops"),
+    }
+
+    for category, category_events in categories.items():
+        for event in category_events:
             event.is_booked = event.id in user_booked_event_ids
+
     return render(request, "events_by_category.html", {"categories": categories})
 
 from django.views.decorators.http import require_POST
@@ -714,10 +736,10 @@ def deny_upgrade(request, request_id):
     return redirect('admin_control_membership')
 
 def manage_courses(request):
-    # Retrieve all courses from the database
     courses = Course.objects.all()
-    logger.debug(f"Retrieved courses: {courses}")  # Log the retrieved courses
     categories = Course.objects.values_list('category__name', flat=True).distinct()
+
+    # Get filter values from the request
     selected_category = request.GET.get('category', '')
     start_date = request.GET.get('start_date', '')
     end_date = request.GET.get('end_date', '')
@@ -735,7 +757,7 @@ def manage_courses(request):
         'selected_category': selected_category,
         'start_date': start_date,
         'end_date': end_date,
-        'courses': courses,  # Pass the courses to the template
+        'courses': courses,
     }
     return render(request, 'manage_courses.html', context)
 
@@ -790,12 +812,24 @@ def delete_course(request, course_id):
     return HttpResponse(status=405)  # Method not allowed
 
 def course_modules(request):
-    selected_category = request.GET.get('category')
-    if (selected_category):
-        courses = Course.objects.filter(category_id=selected_category)
-    else:
-        courses = Course.objects.all()
+    courses = Course.objects.none()  # Default to no courses
+
+    if request.user.is_authenticated and request.user.membership_type:
+        if request.user.membership_type.name == "Community Membership":
+            courses = Course.objects.filter(category__name="Programming")
+        elif request.user.membership_type.name == "Creative Workspace Membership":
+            courses = Course.objects.filter(category__name__in=["Programming", "Design"])
+        elif request.user.membership_type.name == "Key Access Membership":
+            courses = Course.objects.filter(category__name__in=["Programming", "Design", "Marketing"])
+        elif request.user.membership_type.name == "Individual Membership":
+            courses = Course.objects.none()  # Explicitly show no courses
+
     categories = Category.objects.all()
+    selected_category = request.GET.get('category')
+
+    if selected_category:
+        courses = courses.filter(category__id=selected_category)
+
     return render(request, 'CourseModules.html', {
         'courses': courses,
         'categories': categories,

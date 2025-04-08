@@ -37,7 +37,7 @@
                 <thead>
                     <tr>
                         <th>Member Name</th>
-                        <th>Member Email</th>
+                        <th>Interests</th>
                         <th>Requested Membership Type</th>
                         <th>Actions</th>
                     </tr>
@@ -46,7 +46,7 @@
                     {% for request in upgrade_requests %}
                     <tr>
                         <td>{{ request.user.get_full_name }}</td>
-                        <td>{{ request.user.email }}</td>
+                        <td>{{ request.user.interests }}</td>
                         <td>{{ request.requested_type.name }}</td>
                         <td style="text-align: center;">
                             <form action="{% url 'approve_upgrade' request.id %}" method="post" style="display: inline;">
