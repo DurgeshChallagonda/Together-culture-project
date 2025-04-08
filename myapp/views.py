@@ -359,8 +359,8 @@ def member_dashboard(request):
             events = Event.objects.filter(category__in=["Meetups", "Creative Sessions"])
         elif request.user.membership_type.name == "Key Access Membership":
             events = Event.objects.all()
-        elif request.user.membership_type.name == "Individual Membership":
-            events = Event.objects.none()  # Explicitly show no events
+        elif request.user.membership_type.name == "Individual Membership":  
+            events = Event.objects.filter(category="Meetups")
 
     # Fetch the IDs of events already booked by the user
     user_booked_event_ids = Booking.objects.filter(user=request.user).values_list('event_id', flat=True)
@@ -368,7 +368,16 @@ def member_dashboard(request):
         # Mark events as booked if the user has already booked them
         event.is_booked = event.id in user_booked_event_ids
 
-    joined_courses = request.user.joined_courses.all()  # Fetch courses joined by the user
+    # Restrict courses based on membership type
+    membership_type = request.user.membership_type.name if request.user.membership_type else None
+    if membership_type == "Community Membership":
+        joined_courses = request.user.joined_courses.filter(category__name="Programming")
+    elif membership_type == "Creative Workspace Membership":
+        joined_courses = request.user.joined_courses.filter(category__name__in=["Programming", "Design"])
+    elif membership_type == "Key Access Membership":
+        joined_courses = request.user.joined_courses.all()  # Access to all courses
+    else:
+        joined_courses = request.user.joined_courses.none()  # No access if no membership type or Individual Membership
 
     return render(request, "MemberDashboard.html", {
         'events': events,
@@ -543,7 +552,7 @@ def events_by_category(request):
         elif request.user.membership_type.name == "Key Access Membership":
             events = Event.objects.all()
         elif request.user.membership_type.name == "Individual Membership":
-            events = Event.objects.none()  # Explicitly show no events
+            events = Event.objects.filter(category="Meetups")
 
     user_booked_event_ids = Booking.objects.filter(user=request.user).values_list('event_id', flat=True)
     categories = {
