@@ -63,13 +63,16 @@
     <div class="header"></div>
     <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
         <div class="nav-link" style="margin-left: 20px;">
+            <a href="{% url 'member_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
+          </div>
+        <div class="nav-link" style="margin-left: 20px;">
             <a href="{% url 'my_events' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">My Events</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
             <a href="{% url 'membership_plans' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Membership</a>
         </div>
         <div class="nav-link" style="margin-left: 20px;">
-            <a href="{% url 'about_us.html' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
+            <a href="{% url 'about_us' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">About Us</a>
         </div>
         <div class="nav-link" style="margin-left: 20px; position: relative;">
             <img src="{{ user.profile.image.url }}" class="user-pic" onclick="toggleMenu()" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 2px solid #fff;">
@@ -85,7 +88,6 @@
                     </div>
                     <hr style="margin: 10px 0;">
                     <a href="{% url 'profile' %}" class="sub-menu-link" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #333; padding: 5px; border-radius: 5px; transition: background-color 0.3s ease;">
-                        <img src="{% static 'img/view-profile.png' %}" style="width: 20px; height: 20px;">
                         <p style="margin: 0; font-size: 14px;">View Profile</p>
                     </a>
                     <a href="{% url 'edit_profile' %}" class="sub-menu-link" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #333; padding: 5px; border-radius: 5px; transition: background-color 0.3s ease;">
@@ -102,7 +104,9 @@
             </div>
         </div>
     </div>
-    <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+    <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+        <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+      </a>
 
     <!-- Main Content -->
     <div class="container mt-4">
