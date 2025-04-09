@@ -2,6 +2,28 @@
 <html>
   <head>
     {% load static %}
+    <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
+      <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
+    <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+      <div class="nav-link" style="margin-left: 20px;">
+        <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
+      </div>
+      <div class="nav-link" style="margin-left: 20px;">
+        <a href="{% url 'admin_event_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
+      </div>
+      <div class="nav-link" style="margin-left: 20px;">
+        <a href="{% url 'admin_course_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Courses </a>
+      </div>
+      <div class="nav-link" style="margin-left: 20px;">
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+        </form>
+      </div>
+    </div>
+    <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+      <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+    </a>
     <link rel="stylesheet" href="{% static 'base.css' %}">
     <title>Manage All Benefits</title>
   </head>

@@ -68,69 +68,58 @@
     {% load static %}
     <div class="main-container" style="background: #f1e3e3; height: 2000px; position: absolute; overflow: hidden; width: 100%;">
         <div class="header" style="background: #6b4848; width: 100%; height: 106px; position: absolute; left: 0px; top: 0px;"></div>
-        <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
-          <div class="nav-link" style="margin-left: 20px;">
-            <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
-          </div>
-          <div class="nav-link" style="margin-left: 20px;">
-            <a href="{% url 'admin_event_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
-          </div>
-          <div class="nav-link" style="margin-left: 20px;">
-            <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Community </a>
-          </div>
-          <div class="nav-link" style="margin-left: 20px;">
-            <a href="" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Profile</a>
-          </div>
-          <div class="nav-link" style="margin-left: 20px;">
-            <a href="{% url 'resources' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Resources</a>
-          </div>
-          <div class="nav-link" style="margin-left: 20px;">
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-              {% csrf_token %}
-              <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
-            </form>
-          </div>
+      <div class="nav-links" style="display: flex; justify-content: flex-end; align-items: center; height: 106px; padding-right: 40px; position: relative; z-index: 1;">
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'custom_admin_dashboard' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Dashboard</a>
         </div>
-        <img class="logo" style="width: 158.74px; height: 106px; position: absolute; left: 0px; top: 0px; object-fit: cover;" src="{% static 'img/logo.png'%}" />
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'admin_event_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Events</a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <a href="{% url 'admin_course_control' %}" class="link" style="color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700;">Courses </a>
+        </div>
+        <div class="nav-link" style="margin-left: 20px;">
+          <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="link" style="background: none; border: none; color: #ffffff; font-family: 'Inter-Bold', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">Logout</button>
+          </form>
+        </div>
+      </div>
+      <a href="/" style="position: absolute; left: 0px; top: 0px; z-index: 2;">
+        <img class="logo" style="width: 158.74px; height: 106px; object-fit: cover;" src="{% static 'img/logo.png' %}" />
+      </a>
     
     <div class="container mt-4">
         <h1>Admin Event Control</h1>
         <p>Manage events by creating, editing, deleting, or filtering them by category.</p>
 
-        <!-- Filter Events by Category -->
         <div class="card mt-4">
             <div class="card-header">
                 <h2>Filter Events</h2>
             </div>
             <div class="card-body">
                 <form method="get" action="{% url 'admin_event_control' %}">
-                    <div class="form-group">
-                        <label for="categoryFilter">Filter by Category</label>
-                        <select class="form-control" id="categoryFilter" name="category" onchange="this.form.submit()">
-                            <option value="">All Categories</option>
-                            {% if categories %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="categoryFilter">Filter by Category</label>
+                            <select class="form-control" id="categoryFilter" name="category">
+                                <option value="">All Categories</option>
                                 {% for category in categories %}
                                 <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>
                                     {{ category }}
                                 </option>
                                 {% endfor %}
-                            {% else %}
-                                <option disabled>No categories available</option>
-                            {% endif %}
-                        </select>
-                    </div>
-                </form>
-                <form method="get" action="{% url 'admin_event_control' %}">
-                    <div class="form-row">
-                        <div class="form-group col-md-5">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
                             <label for="startDate">Start Date</label>
-                            <input type="date" class="form-control" id="startDate" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+                            <input type="date" class="form-control" id="startDate" name="start_date" value="{{ start_date|default:'' }}">
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
                             <label for="endDate">End Date</label>
-                            <input type="date" class="form-control" id="endDate" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+                            <input type="date" class="form-control" id="endDate" name="end_date" value="{{ end_date|default:'' }}">
                         </div>
-                        <div class="form-group col-md-2 align-self-end">    
+                        <div class="form-group col-md-2 align-self-end">
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
                     </div>
@@ -138,7 +127,6 @@
             </div>
         </div>
 
-        <!-- Event Creation/Editing Form -->
         <div class="card mt-4">
             <div class="card-header">
                 <h2>Create Event</h2>
@@ -180,7 +168,6 @@
         <h1>Manage Events</h1>
         <p>Here you can view, edit, or delete saved events.</p>
 
-        <!-- Display Saved Events -->
         <div class="card mt-4">
             <div class="card-header">
                 <h2>Saved Events</h2>

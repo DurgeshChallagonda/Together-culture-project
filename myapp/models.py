@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.conf import settings  # Import settings to reference the custom user model
 from django.core.exceptions import ValidationError  # Import ValidationError
+from django.apps import AppConfig
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = [
@@ -13,7 +14,7 @@ class CustomUser(AbstractUser):
         ('Female', 'Female'),
     ]
     username = models.CharField(max_length=150, unique=True)  # Ensure this field is unique
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    phone_number = models.CharField(max_length=11, blank=True, null=True)
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,
@@ -46,7 +47,7 @@ class CustomUser(AbstractUser):
     )
 
     def save(self, *args, **kwargs):
-        if not self.pk and not self.password.startswith('pbkdf2_'):  # Ensure password is hashed
+        if not self.pk and not self.password.startswith('pbkdf2_'):
             self.set_password(self.password)
         super().save(*args, **kwargs)
 
@@ -63,7 +64,7 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     description = models.TextField()
-    date = models.DateField()  # Ensure this is a DateField or DateTimeField
+    date = models.DateField()
     image = models.ImageField(upload_to='event_images/', blank=True, null=True)
     bookings = models.ManyToManyField('CustomUser', through='Booking', related_name='event_bookings')
 
@@ -89,19 +90,19 @@ class Booking(models.Model):
         return f"{self.name} - {self.event.name}"
     
 class Register(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)  # Ensure CASCADE is used
-    first_name = models.CharField(max_length=50)  # Updated field name
-    last_name = models.CharField(max_length=50)  # Updated field name
-    phone_number = models.CharField(max_length=15)  # Renamed from mobile_number
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=11)
     email = models.EmailField()
-    interests = models.CharField(max_length=255)  # Updated field name
-    gender = models.CharField(max_length=10)  # Updated field name
-    membership_type = models.CharField(  # Removed 'choices' argument
+    interests = models.CharField(max_length=255)
+    gender = models.CharField(max_length=10)
+    membership_type = models.CharField(
         max_length=50,
-        default='Individual Membership'  # Ensure default is set
+        default='Individual Membership'
     )
-    date_of_birth = models.DateField(blank=True, null=True)  # Added field
-    address = models.TextField(blank=True, null=True)  # Added field
+    date_of_birth = models.DateField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
 
     def clean(self):
         """Validate membership_type against available Membership names."""
@@ -156,9 +157,6 @@ class Membership(models.Model):
         """Ensure 'Individual Membership' exists as a default membership."""
         if not Membership.objects.filter(name="Individual Membership").exists():
             Membership.objects.create(name="Individual Membership", price="0", description="Default individual membership.")
-
-# Ensure this method is called during app initialization
-from django.apps import AppConfig
 
 class MyAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
