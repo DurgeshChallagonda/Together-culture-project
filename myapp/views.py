@@ -175,8 +175,12 @@ def admin_control_membership(request):
         'upgrade_requests': upgrade_requests
     })
 
+@login_required(login_url='admin_login')  # Redirect to admin login if not authenticated
 def admin_membership(request):
-    User = get_user_model()  # Get the custom user model
+    if not request.user.is_superuser:  # Restrict access to superusers only
+        return redirect('admin_login')  # Redirect unauthorized users to admin login
+
+    User = get_user_model()
     search_query = request.GET.get('searchMember', '')
     membership_type_filter = request.GET.get('membershipType', 'all')
 
@@ -186,7 +190,7 @@ def admin_membership(request):
         Q(last_name__icontains=search_query) |
         Q(username__icontains=search_query) |
         Q(email__icontains=search_query)
-    ).exclude(is_superuser=True)  # Ensure this parenthesis is closed
+    ).exclude(is_superuser=True)
 
     # Apply membership type filter if not "all"
     if membership_type_filter != 'all':
